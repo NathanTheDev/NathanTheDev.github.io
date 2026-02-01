@@ -21,9 +21,9 @@ html, body {
 
   background: conic-gradient(
     from 103.85deg at 50% 50%,
-    #fde047 -51.92deg, /* Yellow 300 */
-    #f97316 65.77deg,  /* Orange 500 */
-    #b6421c 185.19deg, /* Orange 900 */
+    #fde047 -51.92deg,
+    #f97316 65.77deg,
+    #b6421c 185.19deg,
     #fde047 308.08deg,
     #f97316 425.77deg
   );
