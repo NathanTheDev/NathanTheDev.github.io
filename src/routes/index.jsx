@@ -10,7 +10,7 @@ export const Route = createFileRoute("/")({
 
     return (
       <div className="flex flex-col items-center justify-center h-screen overflow-hidden gap-8">
-        <h1 className="text-6xl font-bold flex items-center whitespace-pre">
+        <h1 className="text-4xl md:text-6xl font-bold flex items-center whitespace-pre">
           {text.split("").map((char, index) => (
             <motion.span
               key={index}
