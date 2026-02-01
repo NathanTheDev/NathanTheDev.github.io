@@ -21,17 +21,17 @@ html, body {
 
   background: conic-gradient(
     from 103.85deg at 50% 50%,
-    #edb400 -51.92deg,
-    #27bdc6 65.77deg,
-    #ff83af 185.19deg,
-    #edb400 308.08deg,
-    #27bdc6 425.77deg
+    #fde047 -51.92deg, /* Yellow 300 */
+    #f97316 65.77deg,  /* Orange 500 */
+    #b6421c 185.19deg, /* Orange 900 */
+    #fde047 308.08deg,
+    #f97316 425.77deg
   );
 
   animation: rotateOrb 12s linear infinite;
   border-radius: 50%;
-  filter: blur(70px);
-  opacity: 0.3;
+  filter: blur(80px);
+  opacity: 0.5;
 }
 
 @keyframes rotateOrb {
