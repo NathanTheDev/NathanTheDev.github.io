@@ -7,7 +7,7 @@ html, body {
   height: 100%;
   background: #171615;
   color: white;
-  overflow: hidden;
+  overflow-x: hidden;
 }
 
 .orb {
@@ -57,3 +57,27 @@ html, body {
   from, to { border-color: transparent }
   50% { border-color: white }
 }
+
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: #2a2a2a;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #555;
+  border-radius: 5px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #777;
+}
+
+/* Firefox */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: #555 #2a2a2a;
+}
+

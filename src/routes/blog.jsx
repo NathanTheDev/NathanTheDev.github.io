@@ -1,5 +1,7 @@
 import { createFileRoute, Link } from '@tanstack/react-router';
 import { useBlogs } from '../hooks/useBlog';
+import { BlogCard } from '../components/blogCard';
+import { Navbar } from '../components/navbar';
 
 export const Route = createFileRoute('/blog')({
     component: RouteComponent,
@@ -13,13 +15,14 @@ function RouteComponent() {
 
     console.log(blogs);
     return (
-        <nav className="px-60 flex justify-end gap-10 bg-black/40 backdrop-blur-md rounded-xl overflow-hidden shadow-xl">
-            <Link to="/" className="text-l font-bold  px-8 py-3 text-white hover:bg-white/10 transition-colors cursor-pointer">Home</Link>
-            <Link to="/about" className="text-l font-bold px-8 py-3 text-white hover:bg-white/10 transition-colors cursor-pointer">About</Link>
-            <Link to="/" className="text-l font-bold px-8 py-3 text-white hover:bg-white/10 transition-colors cursor-pointer">Blog</Link>
+        <div className="min-h-screen">
+            <Navbar />
 
-        </nav>
-
-
+            <div className="relative z-10 px-60 py-10 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                {blogs.map(blog => (
+                    <BlogCard key={blog.id} title={blog.title} content={blog.content} id={blog.id}/>
+                ))}
+            </div>
+        </div>
     );
 }
