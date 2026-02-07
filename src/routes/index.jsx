@@ -24,7 +24,7 @@ export const Route = createFileRoute("/")({
               {char}
             </motion.span>
           ))}
-          
+
           <motion.span
             initial={{ opacity: 1 }}
             animate={{ opacity: 0 }}
@@ -46,21 +46,21 @@ export const Route = createFileRoute("/")({
             </motion.span>
           </motion.span>
         </h1>
-        
+
         <div className="flex bg-black/40 backdrop-blur-md rounded-xl overflow-hidden shadow-xl">
           <button className="px-8 py-3 text-white hover:bg-white/10 transition-colors cursor-pointer">
             About
           </button>
-          <a 
-            href="https://github.com/NathanTheDev" 
-            target="_blank" 
+          <a
+            href="https://github.com/NathanTheDev"
+            target="_blank"
             rel="noopener noreferrer"
             className="px-8 py-3 text-white hover:bg-white/10 transition-colors cursor-pointer flex items-center justify-center"
           >
             Projects
           </a>
-          <a 
-            href="/resume.pdf" 
+          <a
+            href="/resume.pdf"
             download="Nathan_Resume.pdf"
             className="px-8 py-3 text-white hover:bg-white/10 transition-colors cursor-pointer flex items-center justify-center"
           >
