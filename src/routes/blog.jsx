@@ -22,7 +22,7 @@ function RouteComponent() {
                 a bit of a side distraction and to recover some data structures,
                 and am documenting that here!</p>
 
-            <div className="relative z-10 px-60 py-10 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <div className="relative z-10 py-10 px-4 md:px-20 lg:px-60 y-10 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                 {blogs.map(blog => (
                     <BlogCard key={blog.id} title={blog.title} content={blog.content} id={blog.id}/>
                 ))}
