@@ -19,7 +19,7 @@ function RouteComponent() {
             <Navbar />
 
             <p className="mt-10 mx-10 md:mx-50 lg:mx-100 p-5 justify-end bg-black/40 backdrop-blur-md text-xl text-center font-bold">Currently beginning to slowly progress through LeetCode Quest as
-                a bit of a side distraction and to recover some data structures,
+                a bit of a side distraction and to revise some data structures,
                 and am documenting that here!</p>
 
             <div className="relative z-10 py-10 px-4 md:px-20 lg:px-60 y-10 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
