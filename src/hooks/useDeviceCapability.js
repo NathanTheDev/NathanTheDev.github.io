@@ -9,9 +9,11 @@ function computeCapability() {
   }
 
   const cores = navigator.hardwareConcurrency || 4;
-  const narrowViewport = window.innerWidth <= 768;
   const isCoarsePointer = window.matchMedia("(pointer: coarse)").matches;
-  const isLowPower = cores <= 4 || narrowViewport;
+  // Narrow viewport is a layout concern, not a hardware one — a resized
+  // desktop window shouldn't drop to the static fallback. Only genuinely
+  // low core counts do.
+  const isLowPower = cores <= 2;
 
   return { isLowPower, isCoarsePointer };
 }
