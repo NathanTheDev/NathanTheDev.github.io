@@ -9,6 +9,11 @@ const RADIUS = 3.6;
 const PLANE_WIDTH = 2.6;
 const PLANE_ASPECT = 4 / 3;
 
+// Each card faces radially outward from its own position, so with only 4
+// cards at 90deg spacing, at any moment 2 face the camera and 2 face away —
+// doubleSided keeps those back-facing cards visible instead of getting
+// backface-culled to nothing, so the ring reads as a continuous cylinder
+// rather than 2 cards popping in and out of existence as it spins.
 function GalleryItem({ project, angle, reducedMotion }) {
   const meshRef = useRef();
   const texture = useTexture(project.image);
@@ -28,6 +33,7 @@ function GalleryItem({ project, angle, reducedMotion }) {
       pointer={pointer}
       strength={reducedMotion ? 0 : 1}
       rgbShiftMax={0.02}
+      doubleSided
       onClick={() => navigate({ to: "/projects/$slug", params: { slug: project.slug } })}
       onPointerOver={() => {
         document.body.style.cursor = "pointer";

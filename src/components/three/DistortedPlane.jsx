@@ -1,5 +1,6 @@
 import { useMemo, useRef } from "react";
 import { useFrame } from "@react-three/fiber";
+import * as THREE from "three";
 import "./shaders/distortMaterial";
 
 // Shared cursor-driven liquid distortion + chromatic aberration plane, used for
@@ -13,6 +14,7 @@ export default function DistortedPlane({
   strength = 1,
   rgbShiftMax = 0.02,
   useAlphaChannel = false,
+  doubleSided = false,
   pointer,
   meshRef,
   ...meshProps
@@ -53,6 +55,7 @@ export default function DistortedPlane({
         uRgbShiftMax={rgbShiftMax}
         uAspect={[1, planeHeight / planeWidth]}
         uUseAlphaChannel={useAlphaChannel ? 1 : 0}
+        side={doubleSided ? THREE.DoubleSide : THREE.FrontSide}
         transparent
       />
     </mesh>
