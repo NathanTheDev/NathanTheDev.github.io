@@ -1,61 +1,25 @@
 @import "tailwindcss";
 
+@font-face {
+  font-family: "Fraunces";
+  src: url("/fonts/fraunces-variable.woff2") format("woff2");
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+@theme {
+  --font-display: "Fraunces", ui-serif, serif;
+}
+
 html, body {
   margin: 0;
   padding: 0;
   width: 100%;
   height: 100%;
-  background: #171615;
+  background: #0a0a0a;
   color: white;
   overflow-x: hidden;
-}
-
-.orb {
-  width: 600px;
-  height: 600px;
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  z-index: 0;
-
-  background: conic-gradient(
-    from 103.85deg at 50% 50%,
-    #fde047 -51.92deg,
-    #f97316 65.77deg,
-    #b6421c 185.19deg,
-    #fde047 308.08deg,
-    #f97316 425.77deg
-  );
-
-  animation: rotateOrb 12s linear infinite;
-  border-radius: 50%;
-  filter: blur(80px);
-  opacity: 0.7;
-}
-
-@keyframes rotateOrb {
-  0% {
-    transform: translate(-50%, -50%) rotate(0deg);
-  }
-  100% {
-    transform: translate(-50%, -50%) rotate(360deg);
-  }
-}
-
-.animate-typing {
-  width: 0;
-  animation: typing 2s steps(15, end) forwards, blink 0.75s step-end infinite;
-}
-
-@keyframes typing {
-  from { width: 0 }
-  to { width: 100% }
-}
-
-@keyframes blink {
-  from, to { border-color: transparent }
-  50% { border-color: white }
 }
 
 ::-webkit-scrollbar {
