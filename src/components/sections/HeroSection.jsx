@@ -1,5 +1,5 @@
-import { useRef } from "react";
-import { Canvas } from "@react-three/fiber";
+import { useEffect, useRef } from "react";
+import { Canvas, useFrame } from "@react-three/fiber";
 import CubeCluster from "../three/CubeCluster";
 import DistortedPlane from "../three/DistortedPlane";
 import StaticCubeX from "../three/StaticCubeX";
@@ -8,6 +8,35 @@ import { useRaycastPointerUniform } from "../../hooks/useRaycastPointerUniform";
 import { useTextTexture } from "../../hooks/useTextTexture";
 import { usePrefersReducedMotion } from "../../hooks/usePrefersReducedMotion";
 import { useDeviceCapability } from "../../hooks/useDeviceCapability";
+
+// Subtle cursor-driven camera drift so the cube cluster feels responsive to
+// the pointer, mirroring the parallax in the reference design. Tracks raw
+// window pointer position (not a DOM-rect-relative uv) since it drives the
+// camera itself rather than a shader uniform.
+function CameraParallax({ enabled }) {
+  const pointerRef = useRef({ x: window.innerWidth / 2, y: window.innerHeight / 2 });
+
+  useEffect(() => {
+    if (!enabled) return undefined;
+    function handlePointerMove(event) {
+      pointerRef.current.x = event.clientX;
+      pointerRef.current.y = event.clientY;
+    }
+    window.addEventListener("pointermove", handlePointerMove);
+    return () => window.removeEventListener("pointermove", handlePointerMove);
+  }, [enabled]);
+
+  useFrame(({ camera }) => {
+    if (!enabled) return;
+    const nx = (pointerRef.current.x / window.innerWidth) * 2 - 1;
+    const ny = (pointerRef.current.y / window.innerHeight) * 2 - 1;
+    camera.position.x += (nx * 1.4 - camera.position.x) * 0.03;
+    camera.position.y += (-ny * 0.9 - camera.position.y) * 0.03;
+    camera.lookAt(0, 1.6, 0);
+  });
+
+  return null;
+}
 
 function Wordmark({ strength }) {
   const meshRef = useRef();
@@ -47,6 +76,7 @@ export default function HeroSection() {
         </div>
       ) : (
         <Canvas className="absolute inset-0" gl={{ alpha: true }} camera={{ position: [0, 0, 13], fov: 42 }}>
+          <CameraParallax enabled={!reducedMotion} />
           <CubeCluster position={[0, 1.6, 0]} autoRotate={!reducedMotion} />
           <Wordmark strength={reducedMotion ? 0 : 1.3} />
         </Canvas>

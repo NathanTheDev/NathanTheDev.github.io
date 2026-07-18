@@ -5,8 +5,8 @@ import { useNavigate } from "@tanstack/react-router";
 import DistortedPlane from "./DistortedPlane";
 import { useRaycastPointerUniform } from "../../hooks/useRaycastPointerUniform";
 
-const RADIUS = 4.5;
-const PLANE_WIDTH = 3;
+const RADIUS = 3.6;
+const PLANE_WIDTH = 2.6;
 const PLANE_ASPECT = 4 / 3;
 
 function GalleryItem({ project, angle, reducedMotion }) {
@@ -41,14 +41,26 @@ function GalleryItem({ project, angle, reducedMotion }) {
 
 // Rotates based on how far the page has scrolled through the gallery
 // section (read from sectionRef each frame), not a scroll-jacked area of
-// its own — the browser's native scroll is left completely alone.
+// its own — the browser's native scroll is left completely alone. A slow
+// idle spin plus a resting offset of half the angular spacing are layered
+// on top so the ring never settles with one card dead-center-facing the
+// camera (which hides every other card directly behind or off to the
+// sides) — at rest you always see the curve of at least two neighboring
+// cards, which is what actually reads as a "cylinder" rather than a flat
+// single image.
 export default function GalleryCarousel({ projects, sectionRef, reducedMotion = false }) {
   const groupRef = useRef();
+  const idleRef = useRef(0);
+  const restOffset = Math.PI / projects.length;
 
-  useFrame(() => {
+  useFrame((_, delta) => {
     const section = sectionRef.current;
     const group = groupRef.current;
     if (!section || !group) return;
+
+    if (!reducedMotion) {
+      idleRef.current += delta * 0.12;
+    }
 
     const rect = section.getBoundingClientRect();
     const viewportH = window.innerHeight;
@@ -56,7 +68,7 @@ export default function GalleryCarousel({ projects, sectionRef, reducedMotion = 
     const progressed = viewportH - rect.top;
     const progress = Math.min(1, Math.max(0, progressed / total));
 
-    group.rotation.y = progress * Math.PI;
+    group.rotation.y = idleRef.current + restOffset + progress * Math.PI;
   });
 
   return (

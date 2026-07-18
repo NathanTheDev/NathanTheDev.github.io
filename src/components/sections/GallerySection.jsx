@@ -45,7 +45,7 @@ export default function GallerySection() {
         </div>
       ) : (
         inView && (
-          <Canvas className="absolute inset-0" camera={{ position: [0, 0.6, 9], fov: 45 }}>
+          <Canvas className="absolute inset-0" camera={{ position: [0, 0.6, 8.5], fov: 52 }}>
             <GalleryCarousel projects={projects} sectionRef={sectionRef} reducedMotion={reducedMotion} />
           </Canvas>
         )
