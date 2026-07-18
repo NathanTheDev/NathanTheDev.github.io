@@ -1,6 +1,7 @@
 import { Canvas } from "@react-three/fiber";
 import { Link } from "@tanstack/react-router";
 import GalleryCarousel from "../three/GalleryCarousel";
+import DistortText from "../three/DistortText";
 import { projects } from "../../data/projects";
 import { useInView } from "../../hooks/useInView";
 import { useDeviceCapability } from "../../hooks/useDeviceCapability";
@@ -36,7 +37,7 @@ export default function GallerySection() {
     <section id="projects" ref={sectionRef} className="relative h-screen w-full overflow-hidden bg-[#0a0a0a]">
       <div className="pointer-events-none absolute inset-x-0 top-16 z-10 flex flex-col items-center gap-2 text-center">
         <p className="text-xs tracking-[0.3em] text-white/40 uppercase">Projects</p>
-        <h2 className="font-display text-3xl font-semibold text-white md:text-4xl">Selected work</h2>
+        <DistortText text="Selected work" className="font-display text-3xl font-semibold text-white md:text-4xl" />
       </div>
 
       {isLowPower ? (

@@ -9,8 +9,8 @@ import * as THREE from "three";
 export function useTextTexture(
   text,
   {
-    fontFamily = "Fraunces",
-    fontWeight = 900,
+    fontFamily = "Bourbon St",
+    fontWeight = 400,
     color = "#000000",
     fontSizePx = 200,
     paddingRatio = 0.08,

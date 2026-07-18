@@ -38,7 +38,7 @@ export default function SectionMenu() {
           key={link.href}
           href={link.href}
           onClick={(event) => handleClick(event, link.href)}
-          className="font-display text-sm text-white/70 transition-colors hover:text-white md:text-base"
+          className="text-distort-hover font-display text-sm text-white/70 transition-colors hover:text-white md:text-base"
         >
           {link.label}
         </a>
@@ -47,7 +47,7 @@ export default function SectionMenu() {
         href="https://github.com/NathanTheDev"
         target="_blank"
         rel="noopener noreferrer"
-        className="font-display flex items-center gap-1.5 text-sm text-white/70 transition-colors hover:text-white md:text-base"
+        className="text-distort-hover font-display flex items-center gap-1.5 text-sm text-white/70 transition-colors hover:text-white md:text-base"
       >
         <GitHubIcon className="h-3.5 w-3.5" />
         GitHub

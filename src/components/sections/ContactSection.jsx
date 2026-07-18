@@ -1,3 +1,5 @@
+import DistortText from "../three/DistortText";
+
 function GitHubIcon(props) {
   return (
     <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" {...props}>
@@ -83,9 +85,10 @@ export default function ContactSection() {
       <CubeMotif />
 
       <p className="text-xs tracking-[0.3em] text-white/40 uppercase">Contact</p>
-      <h2 className="font-display mt-4 max-w-xl text-center text-4xl font-semibold md:text-5xl">
-        Let&apos;s build something.
-      </h2>
+      <DistortText
+        text="Let's build something."
+        className="font-display mt-4 max-w-xl text-center text-4xl font-semibold md:text-5xl"
+      />
       <p className="mt-4 max-w-md text-center text-white/50">
         Always open to interesting projects, collaborations, or just talking shop.
       </p>

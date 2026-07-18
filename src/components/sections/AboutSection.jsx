@@ -1,3 +1,5 @@
+import DistortText from "../three/DistortText";
+
 const STACK = ["React", "TypeScript", "Node.js", "Three.js", "Python", "PostgreSQL"];
 
 export default function AboutSection() {
@@ -9,9 +11,10 @@ export default function AboutSection() {
       <div className="flex max-w-2xl flex-col items-center gap-6 text-center">
         <p className="text-xs tracking-[0.3em] text-white/40 uppercase">About</p>
 
-        <h2 className="font-display text-3xl font-semibold md:text-4xl">
-          Software developer, occasional pixel-pusher.
-        </h2>
+        <DistortText
+          text="Software developer, occasional pixel-pusher."
+          className="font-display text-3xl font-semibold md:text-4xl"
+        />
 
         <p className="text-white/60 leading-relaxed">
           I build things for the web — from backend systems to the small interactive
