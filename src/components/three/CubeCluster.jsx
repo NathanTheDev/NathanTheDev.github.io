@@ -29,28 +29,22 @@ export default function CubeCluster({ autoRotate = true, ...groupProps }) {
 
   return (
     <group {...groupProps}>
-      <ambientLight intensity={0.5} />
-      <directionalLight position={[4, 6, 5]} intensity={1.6} />
-      <directionalLight position={[-3, 5, -6]} intensity={0.9} />
-      <pointLight position={[6, 6, 8]} color="#8fb3ff" intensity={2.2} decay={0} />
-      <pointLight position={[-6, -4, -6]} color="#ff7a5c" intensity={1.4} decay={0} />
+      <ambientLight intensity={1.4} />
+      <directionalLight position={[4, 6, 5]} intensity={1.8} />
+      <directionalLight position={[-3, 5, -6]} intensity={1} />
+      <pointLight position={[6, 6, 8]} color="#ffffff" intensity={3.5} decay={0} />
+      <pointLight position={[-6, -4, -6]} color="#ffffff" intensity={2.2} decay={0} />
 
       <mesh ref={centerRef} scale={layout.center.scale}>
         <boxGeometry args={[1, 1, 1]} />
-        <meshStandardMaterial color="#e8e8ef" metalness={0.35} roughness={0.25} emissive="#111122" emissiveIntensity={0.4} />
+        <meshStandardMaterial color="#ffffff" roughness={0.35} metalness={0} />
       </mesh>
 
       <group ref={ringBigRef} rotation={[layout.ringBig.tiltX, 0, layout.ringBig.tiltZ]}>
         {layout.ringBig.cubes.map((cube, i) => (
           <mesh key={i} position={cube.position} rotation={cube.rotation} scale={cube.scale}>
             <boxGeometry args={[1, 1, 1]} />
-            <meshStandardMaterial
-              color={layout.ringBig.color}
-              metalness={0.4}
-              roughness={0.35}
-              emissive={layout.ringBig.color}
-              emissiveIntensity={0.08}
-            />
+            <meshStandardMaterial color="#ffffff" roughness={0.35} metalness={0} />
           </mesh>
         ))}
       </group>
@@ -59,13 +53,7 @@ export default function CubeCluster({ autoRotate = true, ...groupProps }) {
         {layout.ringSmall.cubes.map((cube, i) => (
           <mesh key={i} position={cube.position} rotation={cube.rotation} scale={cube.scale}>
             <boxGeometry args={[1, 1, 1]} />
-            <meshStandardMaterial
-              color={layout.ringSmall.color}
-              metalness={0.4}
-              roughness={0.35}
-              emissive={layout.ringSmall.color}
-              emissiveIntensity={0.08}
-            />
+            <meshStandardMaterial color="#ffffff" roughness={0.35} metalness={0} />
           </mesh>
         ))}
       </group>

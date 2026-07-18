@@ -17,12 +17,12 @@ function projectRing(ring) {
 
 export default function StaticCubeX({ size = 280 }) {
   const layout = generateCubeClusterLayout();
-  const scale = size / 10;
+  const scale = size / 13;
 
   const ringBigPoints = projectRing(layout.ringBig);
   const ringSmallPoints = projectRing(layout.ringSmall);
 
-  function renderPoint({ x, y, size: cubeScale }, color, key) {
+  function renderPoint({ x, y, size: cubeScale }, key) {
     const px = size / 2 + x * scale;
     const py = size / 2 - y * scale;
     const cubeSize = cubeScale * scale * 1.8;
@@ -30,14 +30,12 @@ export default function StaticCubeX({ size = 280 }) {
     return (
       <div
         key={key}
-        className="absolute rounded-[2px]"
+        className="absolute rounded-[2px] bg-white/90 shadow-[0_0_10px_rgba(255,255,255,0.35)]"
         style={{
           width: cubeSize,
           height: cubeSize,
           left: px - cubeSize / 2,
           top: py - cubeSize / 2,
-          background: color,
-          boxShadow: `0 0 10px ${color}55`,
           transform: "rotate(45deg)",
         }}
       />
@@ -48,8 +46,8 @@ export default function StaticCubeX({ size = 280 }) {
 
   return (
     <div className="relative" style={{ width: size, height: size }} aria-hidden="true">
-      {ringBigPoints.map((p, i) => renderPoint(p, layout.ringBig.color, `big-${i}`))}
-      {ringSmallPoints.map((p, i) => renderPoint(p, layout.ringSmall.color, `small-${i}`))}
+      {ringBigPoints.map((p, i) => renderPoint(p, `big-${i}`))}
+      {ringSmallPoints.map((p, i) => renderPoint(p, `small-${i}`))}
       <div
         className="absolute rounded-[3px] bg-white/90 shadow-[0_0_16px_rgba(255,255,255,0.3)]"
         style={{

@@ -17,13 +17,13 @@ function buildRing({ count, radius, cubeSize }) {
 }
 
 export function generateCubeClusterLayout({
-  centerSize = 1.3,
+  centerSize = 1.8,
   outerCount = 22,
-  outerRadius = 4.3,
-  outerCubeSize = 0.32,
+  outerRadius = 6.2,
+  outerCubeSize = 0.46,
   innerCount = 13,
-  innerRadius = 2.15,
-  innerCubeSize = 0.24,
+  innerRadius = 3.1,
+  innerCubeSize = 0.34,
 } = {}) {
   return {
     center: { scale: centerSize },
@@ -31,13 +31,11 @@ export function generateCubeClusterLayout({
       cubes: buildRing({ count: outerCount, radius: outerRadius, cubeSize: outerCubeSize }),
       tiltZ: Math.PI / 4,
       tiltX: Math.PI / 7,
-      color: "#9db4ff",
     },
     ringSmall: {
       cubes: buildRing({ count: innerCount, radius: innerRadius, cubeSize: innerCubeSize }),
       tiltZ: -Math.PI / 4,
       tiltX: -Math.PI / 7,
-      color: "#ff9d7a",
     },
   };
 }
