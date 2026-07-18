@@ -1,4 +1,4 @@
-import { generateCubeLayout } from "./CubeCluster";
+import { generateCubeLayout } from "./cubeLayout";
 
 // Non-WebGL echo of CubeCluster for low-power/touch devices — reuses the
 // same layout data (so the two stay in sync) but renders plain rotated divs
