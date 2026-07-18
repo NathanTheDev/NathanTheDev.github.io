@@ -1,3 +1,5 @@
+import { usePrefersReducedMotion } from "../../hooks/usePrefersReducedMotion";
+
 const LINKS = [
   { label: "Home", href: "#home" },
   { label: "About", href: "#about" },
@@ -13,14 +15,30 @@ function GitHubIcon(props) {
   );
 }
 
+// Plain left-aligned text list under the wordmark, styled to match it
+// (font-display) rather than as a separate pill/button bar. Scrolling is
+// driven explicitly via scrollIntoView rather than relying solely on the
+// global `scroll-behavior: smooth` CSS, since browsers silently force
+// instant scrolling for native anchor jumps under an OS-level reduced-motion
+// setting regardless of page CSS.
 export default function SectionMenu() {
+  const reducedMotion = usePrefersReducedMotion();
+
+  function handleClick(event, href) {
+    const target = document.getElementById(href.slice(1));
+    if (!target) return;
+    event.preventDefault();
+    target.scrollIntoView({ behavior: reducedMotion ? "auto" : "smooth", block: "start" });
+  }
+
   return (
-    <nav className="flex shrink-0 items-center overflow-hidden rounded-xl bg-black/40 shadow-xl backdrop-blur-md">
+    <nav className="flex flex-col items-start gap-1.5">
       {LINKS.map((link) => (
         <a
           key={link.href}
           href={link.href}
-          className="px-3 py-2.5 text-xs whitespace-nowrap text-white transition-colors hover:bg-white/10 sm:px-6 sm:py-3 sm:text-sm"
+          onClick={(event) => handleClick(event, link.href)}
+          className="font-display text-sm text-white/70 transition-colors hover:text-white md:text-base"
         >
           {link.label}
         </a>
@@ -29,10 +47,10 @@ export default function SectionMenu() {
         href="https://github.com/NathanTheDev"
         target="_blank"
         rel="noopener noreferrer"
-        aria-label="GitHub"
-        className="flex shrink-0 items-center justify-center border-l border-white/10 px-3 py-2.5 text-white transition-colors hover:bg-white/10 sm:px-5 sm:py-3"
+        className="font-display flex items-center gap-1.5 text-sm text-white/70 transition-colors hover:text-white md:text-base"
       >
-        <GitHubIcon className="h-3.5 w-3.5 sm:h-4 sm:w-4" />
+        <GitHubIcon className="h-3.5 w-3.5" />
+        GitHub
       </a>
     </nav>
   );
