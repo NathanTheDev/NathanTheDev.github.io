@@ -9,7 +9,7 @@ const RADIUS = 4.5;
 const PLANE_WIDTH = 3;
 const PLANE_ASPECT = 4 / 3;
 
-function GalleryItem({ project, angle }) {
+function GalleryItem({ project, angle, reducedMotion }) {
   const meshRef = useRef();
   const texture = useTexture(project.image);
   const pointer = useRaycastPointerUniform(meshRef);
@@ -26,7 +26,7 @@ function GalleryItem({ project, angle }) {
       position={position}
       rotation={[0, angle, 0]}
       pointer={pointer}
-      strength={1}
+      strength={reducedMotion ? 0 : 1}
       rgbShiftMax={0.02}
       onClick={() => navigate({ to: "/projects/$slug", params: { slug: project.slug } })}
       onPointerOver={() => {
@@ -42,7 +42,7 @@ function GalleryItem({ project, angle }) {
 // Rotates based on how far the page has scrolled through the gallery
 // section (read from sectionRef each frame), not a scroll-jacked area of
 // its own — the browser's native scroll is left completely alone.
-export default function GalleryCarousel({ projects, sectionRef }) {
+export default function GalleryCarousel({ projects, sectionRef, reducedMotion = false }) {
   const groupRef = useRef();
 
   useFrame(() => {
@@ -67,7 +67,12 @@ export default function GalleryCarousel({ projects, sectionRef }) {
 
       <Suspense fallback={null}>
         {projects.map((project, i) => (
-          <GalleryItem key={project.slug} project={project} angle={(i / projects.length) * Math.PI * 2} />
+          <GalleryItem
+            key={project.slug}
+            project={project}
+            angle={(i / projects.length) * Math.PI * 2}
+            reducedMotion={reducedMotion}
+          />
         ))}
       </Suspense>
     </group>

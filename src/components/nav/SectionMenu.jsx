@@ -15,12 +15,12 @@ function GitHubIcon(props) {
 
 export default function SectionMenu() {
   return (
-    <nav className="flex items-center overflow-hidden rounded-xl bg-black/40 shadow-xl backdrop-blur-md">
+    <nav className="flex shrink-0 items-center overflow-hidden rounded-xl bg-black/40 shadow-xl backdrop-blur-md">
       {LINKS.map((link) => (
         <a
           key={link.href}
           href={link.href}
-          className="px-6 py-3 text-sm text-white transition-colors hover:bg-white/10"
+          className="px-3 py-2.5 text-xs whitespace-nowrap text-white transition-colors hover:bg-white/10 sm:px-6 sm:py-3 sm:text-sm"
         >
           {link.label}
         </a>
@@ -30,9 +30,9 @@ export default function SectionMenu() {
         target="_blank"
         rel="noopener noreferrer"
         aria-label="GitHub"
-        className="flex items-center justify-center border-l border-white/10 px-5 py-3 text-white transition-colors hover:bg-white/10"
+        className="flex shrink-0 items-center justify-center border-l border-white/10 px-3 py-2.5 text-white transition-colors hover:bg-white/10 sm:px-5 sm:py-3"
       >
-        <GitHubIcon className="h-4 w-4" />
+        <GitHubIcon className="h-3.5 w-3.5 sm:h-4 sm:w-4" />
       </a>
     </nav>
   );
