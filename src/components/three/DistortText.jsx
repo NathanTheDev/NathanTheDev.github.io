@@ -41,8 +41,8 @@ export default function DistortText({
   text,
   className,
   color = "#ffffff",
-  strength = 0.8,
-  rgbShiftMax = 0.016,
+  strength = 0.5,
+  rgbShiftMax = 0.009,
   falloffRadius = 0.15,
 }) {
   const Tag = as;

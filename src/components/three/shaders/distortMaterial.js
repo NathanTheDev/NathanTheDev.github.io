@@ -41,7 +41,7 @@ const fragmentShader = /* glsl */ `
 
     // Gentle swirl so letterforms curl near the cursor rather than only
     // pushing straight outward, reinforcing the "liquid" feel.
-    float swirlAngle = amount * 1.6;
+    float swirlAngle = amount * 0.55;
     float cs = cos(swirlAngle);
     float sn = sin(swirlAngle);
     vec2 swirlDir = vec2(dir.x * cs - dir.y * sn, dir.x * sn + dir.y * cs);
