@@ -18,28 +18,37 @@ const fragmentShader = /* glsl */ `
   uniform float uTime;
   uniform float uStrength;
   uniform float uRgbShiftMax;
+  uniform float uFalloffRadius;
   uniform vec2 uAspect;
   uniform float uUseAlphaChannel;
   varying vec2 vUv;
-
-  float hash(vec2 p) {
-    return fract(sin(dot(p, vec2(12.9898, 78.233))) * 43758.5453123);
-  }
 
   void main() {
     vec2 uv = vUv;
     vec2 diff = (uv - uMouse) * uAspect;
     float dist = length(diff);
-    float falloff = smoothstep(0.5, 0.0, dist);
+    float falloff = smoothstep(uFalloffRadius, 0.0, dist);
 
     float velocityMag = clamp(length(uMouseVelocity) * 6.0, 0.0, 1.5);
-    float ripple = falloff * uStrength * (0.25 + velocityMag);
+    float amount = falloff * uStrength * (0.35 + velocityMag);
 
-    float n = hash(uv * 9.0 + uTime * 0.4) * 2.0 - 1.0;
     vec2 dir = dist > 0.0001 ? diff / dist : vec2(0.0);
-    vec2 displacement = dir * ripple * 0.08 + vec2(n, n) * ripple * 0.015;
 
-    float shift = uRgbShiftMax * ripple;
+    // Concentric ripple rings radiating from the cursor (smooth sine, not
+    // per-pixel noise) — this is what gives the banded liquid look instead
+    // of a flat/grainy push.
+    float ring = sin(dist * 90.0 - uTime * 2.5) * 0.5 + 0.5;
+
+    // Gentle swirl so letterforms curl near the cursor rather than only
+    // pushing straight outward, reinforcing the "liquid" feel.
+    float swirlAngle = amount * 1.6;
+    float cs = cos(swirlAngle);
+    float sn = sin(swirlAngle);
+    vec2 swirlDir = vec2(dir.x * cs - dir.y * sn, dir.x * sn + dir.y * cs);
+
+    vec2 displacement = swirlDir * amount * 0.1 * (0.45 + 0.55 * ring);
+
+    float shift = uRgbShiftMax * amount * (0.5 + 0.7 * ring);
     vec2 shiftDir = dist > 0.0001 ? dir : vec2(1.0, 0.0);
 
     vec4 sampR = texture2D(uTexture, uv + displacement + shiftDir * shift);
@@ -66,6 +75,7 @@ export const DistortMaterial = shaderMaterial(
     uTime: 0,
     uStrength: 1,
     uRgbShiftMax: 0.02,
+    uFalloffRadius: 0.5,
     uAspect: new THREE.Vector2(1, 1),
     uUseAlphaChannel: 0,
   },

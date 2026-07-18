@@ -6,7 +6,7 @@ import { useRaycastPointerUniform } from "../../hooks/useRaycastPointerUniform";
 import { useDeviceCapability } from "../../hooks/useDeviceCapability";
 import { usePrefersReducedMotion } from "../../hooks/usePrefersReducedMotion";
 
-function DistortTextScene({ text, color, strength, rgbShiftMax }) {
+function DistortTextScene({ text, color, strength, rgbShiftMax, falloffRadius }) {
   const meshRef = useRef();
   const pointer = useRaycastPointerUniform(meshRef);
   const { texture, aspect } = useTextTexture(text, { color });
@@ -23,6 +23,7 @@ function DistortTextScene({ text, color, strength, rgbShiftMax }) {
       pointer={pointer}
       strength={strength}
       rgbShiftMax={rgbShiftMax}
+      falloffRadius={falloffRadius}
       useAlphaChannel
     />
   );
@@ -40,8 +41,9 @@ export default function DistortText({
   text,
   className,
   color = "#ffffff",
-  strength = 0.35,
-  rgbShiftMax = 0.006,
+  strength = 0.8,
+  rgbShiftMax = 0.016,
+  falloffRadius = 0.15,
 }) {
   const Tag = as;
   const { isLowPower, isCoarsePointer } = useDeviceCapability();
@@ -61,7 +63,13 @@ export default function DistortText({
         camera={{ position: [0, 0, 5], fov: 50 }}
         gl={{ alpha: true }}
       >
-        <DistortTextScene text={text} color={color} strength={strength} rgbShiftMax={rgbShiftMax} />
+        <DistortTextScene
+          text={text}
+          color={color}
+          strength={strength}
+          rgbShiftMax={rgbShiftMax}
+          falloffRadius={falloffRadius}
+        />
       </Canvas>
     </div>
   );

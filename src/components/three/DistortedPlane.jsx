@@ -13,6 +13,7 @@ export default function DistortedPlane({
   width,
   strength = 1,
   rgbShiftMax = 0.02,
+  falloffRadius = 0.5,
   useAlphaChannel = false,
   doubleSided = false,
   pointer,
@@ -53,6 +54,7 @@ export default function DistortedPlane({
         uTexture={texture}
         uStrength={strength}
         uRgbShiftMax={rgbShiftMax}
+        uFalloffRadius={falloffRadius}
         uAspect={[1, planeHeight / planeWidth]}
         uUseAlphaChannel={useAlphaChannel ? 1 : 0}
         side={doubleSided ? THREE.DoubleSide : THREE.FrontSide}
