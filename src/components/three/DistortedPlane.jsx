@@ -16,6 +16,7 @@ export default function DistortedPlane({
   falloffRadius = 0.5,
   useAlphaChannel = false,
   doubleSided = false,
+  alwaysOnTop = false,
   pointer,
   meshRef,
   ...meshProps
@@ -47,7 +48,7 @@ export default function DistortedPlane({
   });
 
   return (
-    <mesh ref={mesh} {...meshProps}>
+    <mesh ref={mesh} renderOrder={alwaysOnTop ? 10 : 0} {...meshProps}>
       <planeGeometry args={[planeWidth, planeHeight]} />
       <distortMaterial
         ref={materialRef}
@@ -58,6 +59,7 @@ export default function DistortedPlane({
         uAspect={[1, planeHeight / planeWidth]}
         uUseAlphaChannel={useAlphaChannel ? 1 : 0}
         side={doubleSided ? THREE.DoubleSide : THREE.FrontSide}
+        depthTest={!alwaysOnTop}
         transparent
       />
     </mesh>

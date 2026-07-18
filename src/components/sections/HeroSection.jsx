@@ -62,8 +62,9 @@ function Wordmark({ strength }) {
       position={[x, 1.6, 0]}
       pointer={pointer}
       strength={strength}
-      rgbShiftMax={0.022}
-      falloffRadius={0.17}
+      rgbShiftMax={0.007}
+      falloffRadius={0.21}
+      alwaysOnTop
       useAlphaChannel
     />
   );
@@ -95,7 +96,7 @@ export default function HeroSection() {
           <group ref={cubeGroupRef}>
             <CubeCluster position={[0, 1.6, 0]} autoRotate={!reducedMotion} />
           </group>
-          <Wordmark strength={reducedMotion ? 0 : 1.1} />
+          <Wordmark strength={reducedMotion ? 0 : 0.32} />
         </Canvas>
       )}
 
