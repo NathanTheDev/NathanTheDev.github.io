@@ -45,7 +45,11 @@ function CubeParallax({ enabled, targetRef }) {
 function Wordmark({ strength }) {
   const meshRef = useRef();
   const pointer = useRaycastPointerUniform(meshRef);
-  const { texture, aspect } = useTextTexture("Nathan Smith", { color: "#ffffff" });
+  const { texture, aspect } = useTextTexture("Nathan Smith", {
+    color: "#ffffff",
+    fontFamily: "Fraunces",
+    fontWeight: 900,
+  });
   const viewport = useThree((state) => state.viewport);
 
   if (!texture) return null;
@@ -100,7 +104,7 @@ export default function HeroSection() {
         </Canvas>
       )}
 
-      <div className="absolute top-[58%] left-[6%] z-10 flex flex-col items-start">
+      <div className="absolute top-[58%] left-[6.5%] z-10 flex flex-col items-start">
         <SectionMenu />
       </div>
     </section>

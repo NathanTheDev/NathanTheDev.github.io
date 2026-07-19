@@ -7,7 +7,7 @@ const LINKS = [
   { label: "Contact", href: "#contact" },
 ];
 
-const LINK_CLASS = "font-display text-3xl text-white/70 md:text-4xl";
+const LINK_CLASS = "font-display text-4xl text-white/70 md:text-5xl";
 
 function GitHubIcon(props) {
   return (
