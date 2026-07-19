@@ -32,8 +32,8 @@ function CubeParallax({ enabled, targetRef }) {
     if (!group || !enabled) return;
     const nx = (pointerRef.current.x / window.innerWidth) * 2 - 1;
     const ny = (pointerRef.current.y / window.innerHeight) * 2 - 1;
-    group.position.x += (nx * 0.5 - group.position.x) * 0.03;
-    group.position.y += (-ny * 0.32 - group.position.y) * 0.03;
+    group.position.x += (nx * 0.18 - group.position.x) * 0.03;
+    group.position.y += (-ny * 0.12 - group.position.y) * 0.03;
   });
 
   return null;

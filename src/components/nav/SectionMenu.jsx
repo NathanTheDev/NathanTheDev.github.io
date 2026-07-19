@@ -44,8 +44,8 @@ export default function SectionMenu() {
             as="span"
             text={link.label}
             className={LINK_CLASS}
-            strength={0.6}
-            rgbShiftMax={0.008}
+            strength={0.4}
+            rgbShiftMax={0.005}
             falloffRadius={0.6}
           />
         </a>
@@ -61,8 +61,8 @@ export default function SectionMenu() {
           as="span"
           text="GitHub"
           className={LINK_CLASS}
-          strength={0.6}
-          rgbShiftMax={0.008}
+          strength={0.4}
+          rgbShiftMax={0.005}
           falloffRadius={0.6}
         />
       </a>
