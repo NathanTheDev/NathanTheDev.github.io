@@ -41,9 +41,9 @@ export default function DistortText({
   text,
   className,
   color = "#ffffff",
-  strength = 0.15,
-  rgbShiftMax = 0.0028,
-  falloffRadius = 0.19,
+  strength = 0.3,
+  rgbShiftMax = 0.006,
+  falloffRadius = 0.2,
 }) {
   const Tag = as;
   const { isLowPower, isCoarsePointer } = useDeviceCapability();
@@ -54,12 +54,12 @@ export default function DistortText({
   }
 
   return (
-    <div className="relative">
+    <div className="relative inline-block">
       <Tag className={className} style={{ visibility: "hidden" }}>
         {text}
       </Tag>
       <Canvas
-        className="absolute inset-0"
+        style={{ position: "absolute", inset: 0 }}
         camera={{ position: [0, 0, 5], fov: 50 }}
         gl={{ alpha: true }}
       >

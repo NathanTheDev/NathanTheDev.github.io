@@ -1,11 +1,13 @@
 import { usePrefersReducedMotion } from "../../hooks/usePrefersReducedMotion";
+import DistortText from "../three/DistortText";
 
 const LINKS = [
-  { label: "Home", href: "#home" },
   { label: "About", href: "#about" },
   { label: "Projects", href: "#projects" },
   { label: "Contact", href: "#contact" },
 ];
+
+const LINK_CLASS = "font-display text-sm text-white/70 md:text-base";
 
 function GitHubIcon(props) {
   return (
@@ -20,7 +22,10 @@ function GitHubIcon(props) {
 // driven explicitly via scrollIntoView rather than relying solely on the
 // global `scroll-behavior: smooth` CSS, since browsers silently force
 // instant scrolling for native anchor jumps under an OS-level reduced-motion
-// setting regardless of page CSS.
+// setting regardless of page CSS. Labels render via DistortText (real <a>
+// wraps it, so click/keyboard/a11y behavior is unaffected — clicking the
+// canvas still bubbles up and triggers the anchor's href/onClick) so hovering
+// a link gives the same liquid warp as the rest of the site's display text.
 export default function SectionMenu() {
   const reducedMotion = usePrefersReducedMotion();
 
@@ -34,23 +39,32 @@ export default function SectionMenu() {
   return (
     <nav className="flex flex-col items-start gap-1.5">
       {LINKS.map((link) => (
-        <a
-          key={link.href}
-          href={link.href}
-          onClick={(event) => handleClick(event, link.href)}
-          className="text-distort-hover font-display text-sm text-white/70 transition-colors hover:text-white md:text-base"
-        >
-          {link.label}
+        <a key={link.href} href={link.href} onClick={(event) => handleClick(event, link.href)}>
+          <DistortText
+            as="span"
+            text={link.label}
+            className={LINK_CLASS}
+            strength={1.4}
+            rgbShiftMax={0.022}
+            falloffRadius={0.4}
+          />
         </a>
       ))}
       <a
         href="https://github.com/NathanTheDev"
         target="_blank"
         rel="noopener noreferrer"
-        className="text-distort-hover font-display flex items-center gap-1.5 text-sm text-white/70 transition-colors hover:text-white md:text-base"
+        className="flex items-center gap-1.5"
       >
-        <GitHubIcon className="h-3.5 w-3.5" />
-        GitHub
+        <GitHubIcon className="h-3.5 w-3.5 text-white/70" />
+        <DistortText
+          as="span"
+          text="GitHub"
+          className={LINK_CLASS}
+          strength={1.4}
+          rgbShiftMax={0.022}
+          falloffRadius={0.4}
+        />
       </a>
     </nav>
   );

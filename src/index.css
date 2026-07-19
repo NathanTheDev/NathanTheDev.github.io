@@ -40,18 +40,6 @@ html {
   background: radial-gradient(circle at 50% 45%, #ffffff 0%, #cfcfcf 45%, #9a9a9a 75%, #6b6b6b 100%);
 }
 
-/* Lightweight chromatic-split hover for real, clickable text (nav links) —
-   same RGB-shift family as the WebGL wordmark/heading distort, at a much
-   lower intensity, without sacrificing real <a> semantics/click behavior. */
-.text-distort-hover {
-  transition: text-shadow 0.18s ease;
-}
-.text-distort-hover:hover {
-  text-shadow:
-    -1px 0 rgba(255, 70, 70, 0.5),
-    1px 0 rgba(70, 150, 255, 0.5);
-}
-
 ::-webkit-scrollbar {
   width: 10px;
 }
