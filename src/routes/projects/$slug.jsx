@@ -50,6 +50,17 @@ function ProjectDetail() {
 
           <p className="leading-relaxed text-white/70">{project.description}</p>
 
+          {project.highlights && (
+            <ul className="flex flex-col gap-3">
+              {project.highlights.map((highlight) => (
+                <li key={highlight} className="flex gap-3 leading-relaxed text-white/70">
+                  <span aria-hidden="true" className="mt-2.5 h-1 w-1 shrink-0 rounded-full bg-white/40" />
+                  {highlight}
+                </li>
+              ))}
+            </ul>
+          )}
+
           <div className="mt-2 flex flex-wrap items-center gap-3">
             {project.links?.site && (
               <a

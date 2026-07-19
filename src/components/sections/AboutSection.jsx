@@ -37,8 +37,8 @@ export default function AboutSection() {
         <p className="text-lg text-white/60 leading-relaxed">
           A recent graduate from UNSW with a bachelor’s in computer science and economics,
           a software engineer passionate about building reliable, maintainable, and
-          well-documented software. I specialize in full-stack development and have
-          hands-on experience with real-world systems, from backend architecture and
+          well documented software. I specialize in full stack development and have
+          hands on experience with real world systems, from backend architecture and
           databases to frontend interfaces and deployment pipelines, and leadership.
         </p>
 
