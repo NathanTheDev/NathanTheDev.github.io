@@ -1,6 +1,27 @@
 import DistortText from "../three/DistortText";
 
-const STACK = ["React", "TypeScript", "Node.js", "Three.js", "Python", "PostgreSQL"];
+const STACK = [
+  "JavaScript",
+  "C",
+  "C++",
+  "Rust",
+  "Python",
+  "PostgreSQL",
+  "AWS",
+  "Git",
+  "React",
+  "Node.js",
+  "WebSockets",
+  "Docker",
+  "Linux",
+  "Tauri",
+  "Supabase",
+  "Express",
+  "Three.js",
+  "Tailwind CSS",
+  "TanStack Router",
+  "Vite",
+];
 
 export default function AboutSection() {
   return (
@@ -11,9 +32,9 @@ export default function AboutSection() {
       <div className="flex max-w-2xl flex-col items-center gap-6 text-center">
         <p className="text-xs tracking-[0.3em] text-white/40 uppercase">About</p>
 
-        <DistortText text="Hi, I’m Nathan." className="font-display text-3xl font-semibold md:text-4xl" />
+        <DistortText text="Hi, I’m Nathan." className="font-display text-4xl font-semibold md:text-5xl" />
 
-        <p className="text-white/60 leading-relaxed">
+        <p className="text-lg text-white/60 leading-relaxed">
           A recent graduate from UNSW with a bachelor’s in computer science and economics,
           a software engineer passionate about building reliable, maintainable, and
           well-documented software. I specialize in full-stack development and have

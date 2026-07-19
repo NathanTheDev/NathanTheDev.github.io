@@ -89,9 +89,6 @@ export default function ContactSection() {
         text="Let's build something."
         className="font-display mt-3 max-w-xl text-center text-3xl font-semibold sm:text-4xl md:text-5xl"
       />
-      <p className="mt-3 max-w-md text-center text-white/50">
-        Always open to interesting projects, collaborations, or just talking shop.
-      </p>
 
       <div className="mt-8 grid w-full max-w-2xl grid-cols-2 gap-2 sm:mt-12 sm:gap-3">
         {LINKS.map((link) => (
