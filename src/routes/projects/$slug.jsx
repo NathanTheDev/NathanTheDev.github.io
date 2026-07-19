@@ -50,7 +50,17 @@ function ProjectDetail() {
 
           <p className="leading-relaxed text-white/70">{project.description}</p>
 
-          <div className="mt-2 flex flex-wrap gap-3">
+          <div className="mt-2 flex flex-wrap items-center gap-3">
+            {project.links?.site && (
+              <a
+                href={project.links.site}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="rounded-xl bg-white/5 px-5 py-3 text-sm text-white backdrop-blur-md transition-colors hover:bg-white/10"
+              >
+                Company site
+              </a>
+            )}
             {project.links?.github && (
               <a
                 href={project.links.github}
@@ -72,6 +82,17 @@ function ProjectDetail() {
                 Live demo
               </a>
             )}
+            {project.links?.devpost && (
+              <a
+                href={project.links.devpost}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="rounded-xl bg-white/5 px-5 py-3 text-sm text-white backdrop-blur-md transition-colors hover:bg-white/10"
+              >
+                View on Devpost
+              </a>
+            )}
+            {project.private && <span className="text-sm text-white/40">Private repo</span>}
           </div>
         </div>
       </div>

@@ -1,39 +1,40 @@
 export const projects = [
   {
-    slug: "aurora-dashboard",
-    title: "Aurora Dashboard",
+    slug: "ladder",
+    title: "Ladder MVP",
     description:
-      "A real-time analytics dashboard with live-updating charts and alerting, built for teams monitoring production systems.",
+      "Lead backend engineer on Ladder, a staffing agency startup — built the backend and database systems from scratch, shipping their MVP.",
     image: "/images/projects/project-1.svg",
-    tags: ["React", "TypeScript", "WebSockets"],
-    links: { github: "https://github.com/NathanTheDev" },
+    tags: ["TypeScript", "Express", "Zod", "Jest", "Postgres", "Supabase"],
+    links: { site: "https://ladder.inc" },
+    private: true,
   },
   {
-    slug: "northwind-cli",
-    title: "Northwind CLI",
+    slug: "helm",
+    title: "Helm",
     description:
-      "A developer-friendly command-line tool for scaffolding and managing microservice deployments across environments.",
+      "A personal productivity dashboard — habit tracking, kanban project boards with time tracking, custom data tables, a real-time collaborative notes editor, and Google Calendar integration, all in one place.",
     image: "/images/projects/project-2.svg",
-    tags: ["Node.js", "Docker", "CLI"],
-    links: { github: "https://github.com/NathanTheDev" },
+    tags: ["Next.js 16", "React 19", "Express", "Prisma", "Postgres", "Firebase Auth"],
+    links: { github: "https://github.com/NathanTheDev/helm", live: "https://helm-six-self.vercel.app" },
   },
   {
-    slug: "wavelength",
-    title: "Wavelength",
+    slug: "livecode",
+    title: "LiveCode",
     description:
-      "An audio visualization playground exploring WebGL shaders driven by real-time frequency analysis.",
+      "Headless real-time collaboration service powering Helm's notes feature — stores and syncs Yjs CRDT state over WebSockets, with Firebase-authenticated access control.",
     image: "/images/projects/project-3.svg",
-    tags: ["Three.js", "Web Audio API", "GLSL"],
-    links: { github: "https://github.com/NathanTheDev" },
+    tags: ["Rust", "Axum", "sqlx", "Node.js", "y-websocket", "Yjs"],
+    links: { github: "https://github.com/NathanTheDev/LiveCode" },
   },
   {
-    slug: "fieldnote",
-    title: "Fieldnote",
+    slug: "gitrank",
+    title: "GitRank",
     description:
-      "A lightweight, offline-first note-taking app with end-to-end encrypted sync between devices.",
+      "Competitive ranking system for GitHub profiles — Elo rating and tier ranks based on repos, stars, forks, commits, issues, and PRs, plus head-to-head comparisons and a seasonal leaderboard. Built at the NextGen Ventures Hackathon.",
     image: "/images/projects/project-4.svg",
-    tags: ["React Native", "SQLite", "Encryption"],
-    links: { github: "https://github.com/NathanTheDev" },
+    tags: ["TanStack Start", "React", "tRPC", "Postgres", "Prisma", "Python", "FastAPI"],
+    links: { github: "https://github.com/joshua-poole/gitrank", devpost: "https://devpost.com/software/github-ranked-vqk476" },
   },
 ];
 
