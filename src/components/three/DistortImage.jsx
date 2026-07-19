@@ -36,8 +36,8 @@ export default function DistortImage({
   src,
   alt,
   className,
-  strength = 1,
-  rgbShiftMax = 0.02,
+  strength = 0.4,
+  rgbShiftMax = 0.008,
   falloffRadius = 0.4,
 }) {
   const { isLowPower, isCoarsePointer } = useDeviceCapability();
