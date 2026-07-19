@@ -86,12 +86,18 @@ export function useSectionSnapScroll() {
       document.getElementById(SECTION_IDS[nextSectionIndex]).scrollIntoView({ behavior: "smooth", block: "start" });
 
       if (nextSectionIndex === PROJECTS_INDEX) {
+        // Position the filmstrip instantly (not via scrollIntoView, and not a
+        // plain scrollLeft assignment either — the track has scroll-behavior:
+        // smooth, which makes even direct scrollLeft writes animate). Both of
+        // those would either fight the still-mid-animation outer vertical
+        // scrollIntoView above (nudging body.scrollTop to bring the card
+        // "into view") or visibly glide the filmstrip while the section is
+        // still arriving. An explicit "instant" behavior sidesteps both.
+        const track = document.getElementById("projects-track");
         const cards = getProjectCards();
         const entryCard = direction === 1 ? cards[0] : cards[cards.length - 1];
-        if (entryCard) {
-          requestAnimationFrame(() => {
-            entryCard.scrollIntoView({ behavior: "auto", inline: "start", block: "nearest" });
-          });
+        if (track && entryCard) {
+          track.scrollTo({ left: entryCard.offsetLeft, behavior: "instant" });
         }
       }
 
