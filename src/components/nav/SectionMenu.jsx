@@ -7,7 +7,7 @@ const LINKS = [
   { label: "Contact", href: "#contact" },
 ];
 
-const LINK_CLASS = "font-display text-sm text-white/70 md:text-base";
+const LINK_CLASS = "font-display text-3xl text-white/70 md:text-4xl";
 
 function GitHubIcon(props) {
   return (
@@ -37,7 +37,7 @@ export default function SectionMenu() {
   }
 
   return (
-    <nav className="flex flex-col items-start gap-1.5">
+    <nav className="flex flex-col items-start gap-3">
       {LINKS.map((link) => (
         <a key={link.href} href={link.href} onClick={(event) => handleClick(event, link.href)}>
           <DistortText
@@ -54,9 +54,9 @@ export default function SectionMenu() {
         href="https://github.com/NathanTheDev"
         target="_blank"
         rel="noopener noreferrer"
-        className="flex items-center gap-1.5"
+        className="flex items-center gap-3"
       >
-        <GitHubIcon className="h-3.5 w-3.5 text-white/70" />
+        <GitHubIcon className="h-8 w-8 text-white/70" />
         <DistortText
           as="span"
           text="GitHub"
