@@ -63,3 +63,10 @@ html {
   scrollbar-color: #555 #2a2a2a;
 }
 
+.no-scrollbar {
+  scrollbar-width: none;
+}
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
