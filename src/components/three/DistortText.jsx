@@ -41,9 +41,9 @@ export default function DistortText({
   text,
   className,
   color = "#ffffff",
-  strength = 0.3,
-  rgbShiftMax = 0.006,
-  falloffRadius = 0.2,
+  strength = 0.15,
+  rgbShiftMax = 0.003,
+  falloffRadius = 0.35,
 }) {
   const Tag = as;
   const { isLowPower, isCoarsePointer } = useDeviceCapability();

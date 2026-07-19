@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { Link } from "@tanstack/react-router";
 import DistortText from "../three/DistortText";
+import DistortImage from "../three/DistortImage";
 import { projects } from "../../data/projects";
 
 // One project fills the viewport at a time in a horizontal filmstrip.
@@ -47,7 +48,7 @@ export default function GallerySection() {
             data-project-card
             className="flex h-full w-full shrink-0 snap-start flex-col items-center justify-center gap-6 px-6 text-center"
           >
-            <img
+            <DistortImage
               src={project.image}
               alt={project.title}
               className="h-56 w-auto max-w-md rounded-2xl object-cover shadow-2xl md:h-72"
