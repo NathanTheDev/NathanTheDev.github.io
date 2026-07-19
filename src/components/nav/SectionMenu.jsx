@@ -7,7 +7,7 @@ const LINKS = [
   { label: "Contact", href: "#contact" },
 ];
 
-const LINK_CLASS = "font-display text-4xl text-white/70 md:text-5xl";
+const LINK_CLASS = "font-display text-4xl font-bold text-white/70 uppercase md:text-5xl";
 
 function GitHubIcon(props) {
   return (
@@ -42,8 +42,9 @@ export default function SectionMenu() {
         <a key={link.href} href={link.href} onClick={(event) => handleClick(event, link.href)}>
           <DistortText
             as="span"
-            text={link.label}
+            text={link.label.toUpperCase()}
             className={LINK_CLASS}
+            fontWeight={700}
             strength={0.4}
             rgbShiftMax={0.005}
             falloffRadius={0.6}
@@ -59,8 +60,9 @@ export default function SectionMenu() {
         <GitHubIcon className="h-8 w-8 text-white/70" />
         <DistortText
           as="span"
-          text="GitHub"
+          text="GITHUB"
           className={LINK_CLASS}
+          fontWeight={700}
           strength={0.4}
           rgbShiftMax={0.005}
           falloffRadius={0.6}

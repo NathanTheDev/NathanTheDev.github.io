@@ -6,10 +6,10 @@ import { useRaycastPointerUniform } from "../../hooks/useRaycastPointerUniform";
 import { useDeviceCapability } from "../../hooks/useDeviceCapability";
 import { usePrefersReducedMotion } from "../../hooks/usePrefersReducedMotion";
 
-function DistortTextScene({ text, color, strength, rgbShiftMax, falloffRadius }) {
+function DistortTextScene({ text, color, fontWeight, strength, rgbShiftMax, falloffRadius }) {
   const meshRef = useRef();
   const pointer = useRaycastPointerUniform(meshRef);
-  const { texture, aspect } = useTextTexture(text, { color });
+  const { texture, aspect } = useTextTexture(text, { color, fontWeight });
   const viewport = useThree((state) => state.viewport);
 
   if (!texture) return null;
@@ -41,6 +41,7 @@ export default function DistortText({
   text,
   className,
   color = "#ffffff",
+  fontWeight,
   strength = 0.1,
   rgbShiftMax = 0.002,
   falloffRadius = 0.35,
@@ -66,6 +67,7 @@ export default function DistortText({
         <DistortTextScene
           text={text}
           color={color}
+          fontWeight={fontWeight}
           strength={strength}
           rgbShiftMax={rgbShiftMax}
           falloffRadius={falloffRadius}

@@ -3,7 +3,7 @@ import { usePrefersReducedMotion } from "./usePrefersReducedMotion";
 
 const SECTION_IDS = ["home", "about", "projects", "contact"];
 const PROJECTS_INDEX = SECTION_IDS.indexOf("projects");
-const ANIMATION_MS = 900;
+const ANIMATION_MS = 450;
 
 function currentSectionIndex() {
   const scrollPos = document.body.scrollTop;

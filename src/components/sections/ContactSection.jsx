@@ -46,7 +46,7 @@ const LINKS = [
     icon: LinkedInIcon,
     label: "LinkedIn",
     sub: "Connect with me",
-    href: "https://www.linkedin.com/in/nathansmith",
+    href: "https://www.linkedin.com/in/nathan-parker-smith/",
     external: true,
   },
   {
