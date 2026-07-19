@@ -11,15 +11,14 @@ export default function AboutSection() {
       <div className="flex max-w-2xl flex-col items-center gap-6 text-center">
         <p className="text-xs tracking-[0.3em] text-white/40 uppercase">About</p>
 
-        <DistortText
-          text="Software developer, occasional pixel-pusher."
-          className="font-display text-3xl font-semibold md:text-4xl"
-        />
+        <DistortText text="Hi, I’m Nathan." className="font-display text-3xl font-semibold md:text-4xl" />
 
         <p className="text-white/60 leading-relaxed">
-          I build things for the web — from backend systems to the small interactive
-          details that make an interface feel alive. This site's homepage is one of
-          those details: a good excuse to spend a weekend deep in shaders.
+          A recent graduate from UNSW with a bachelor’s in computer science and economics,
+          a software engineer passionate about building reliable, maintainable, and
+          well-documented software. I specialize in full-stack development and have
+          hands-on experience with real-world systems, from backend architecture and
+          databases to frontend interfaces and deployment pipelines, and leadership.
         </p>
 
         <div className="mt-4 flex flex-wrap justify-center gap-2">
