@@ -38,7 +38,14 @@ function ProjectDetail() {
         <img src={project.image} alt={project.title} className="w-full rounded-2xl border border-white/10" />
 
         <div className="flex flex-col gap-4">
-          <h1 className="font-display text-4xl font-semibold">{project.title}</h1>
+          <div className="flex flex-wrap items-center gap-3">
+            <h1 className="font-display text-4xl font-semibold">{project.title}</h1>
+            {project.status && (
+              <span className="rounded-full bg-amber-400/90 px-3 py-1 text-xs font-medium text-black">
+                {project.status}
+              </span>
+            )}
+          </div>
 
           <div className="flex flex-wrap gap-2">
             {project.tags.map((tag) => (
@@ -48,7 +55,7 @@ function ProjectDetail() {
             ))}
           </div>
 
-          <p className="leading-relaxed text-white/70">{project.description}</p>
+          <p className="leading-relaxed text-white/70">{project.longDescription ?? project.description}</p>
 
           {project.highlights && (
             <ul className="flex flex-col gap-3">

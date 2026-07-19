@@ -3,6 +3,8 @@ export const projects = [
     slug: "ladder",
     title: "Ladder MVP",
     description:
+      "Lead backend engineer on Ladder, a staffing agency startup. Built the backend and database systems from scratch, shipping their MVP.",
+    longDescription:
       "Lead backend engineer on Ladder, a staffing agency startup built as part of the UNSW Founders 10x Accelerator. Led a team of 6 engineers to design and deliver two production backend services powering the company's MVP.",
     highlights: [
       "Owned and architected backend systems to support 5,000+ users, planning for integration with schools and large scale onboarding using Express, Supabase (PostgreSQL, Auth), and Zod for schema validation, with Zod OpenAPI generating contract first API documentation.",
@@ -20,6 +22,7 @@ export const projects = [
   {
     slug: "helm",
     title: "Helm",
+    status: "In progress",
     description:
       "A personal productivity dashboard featuring habit tracking, kanban project boards with time tracking, custom data tables, a real time collaborative notes editor, and Google Calendar integration, all in one place.",
     highlights: [

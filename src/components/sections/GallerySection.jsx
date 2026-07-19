@@ -51,7 +51,12 @@ export default function GallerySection() {
             data-project-card
             className="flex h-full w-full shrink-0 snap-start flex-col items-center justify-center gap-3 px-6 py-16 text-center sm:gap-4 sm:py-20 md:gap-6"
           >
-            <Link to="/projects/$slug" params={{ slug: project.slug }}>
+            <Link to="/projects/$slug" params={{ slug: project.slug }} className="relative inline-block">
+              {project.status && (
+                <span className="absolute top-2 left-2 z-10 rounded-full bg-amber-400/90 px-2.5 py-1 text-xs font-medium text-black">
+                  {project.status}
+                </span>
+              )}
               <DistortImage
                 src={project.image}
                 alt={project.title}
