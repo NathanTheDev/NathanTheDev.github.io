@@ -7,7 +7,7 @@ const LINKS = [
   { label: "Contact", href: "#contact" },
 ];
 
-const LINK_CLASS = "font-display text-4xl font-bold text-white/70 uppercase md:text-5xl";
+const LINK_CLASS = "font-display text-3xl font-bold text-white/70 uppercase sm:text-4xl md:text-5xl";
 
 function GitHubIcon(props) {
   return (
@@ -26,7 +26,7 @@ function GitHubIcon(props) {
 // wraps it, so click/keyboard/a11y behavior is unaffected — clicking the
 // canvas still bubbles up and triggers the anchor's href/onClick) so hovering
 // a link gives the same liquid warp as the rest of the site's display text.
-export default function SectionMenu() {
+export default function SectionMenu({ align = "start" }) {
   const reducedMotion = usePrefersReducedMotion();
 
   function handleClick(event, href) {
@@ -37,7 +37,7 @@ export default function SectionMenu() {
   }
 
   return (
-    <nav className="flex flex-col items-start gap-3">
+    <nav className={`flex flex-col gap-3 ${align === "center" ? "items-center" : "items-start"}`}>
       {LINKS.map((link) => (
         <a key={link.href} href={link.href} onClick={(event) => handleClick(event, link.href)}>
           <DistortText

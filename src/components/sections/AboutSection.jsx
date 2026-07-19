@@ -6,7 +6,7 @@ export default function AboutSection() {
   return (
     <section
       id="about"
-      className="relative flex min-h-screen w-full flex-col items-center justify-center bg-[#0a0a0a] px-6 py-32 text-white"
+      className="relative flex min-h-dvh w-full flex-col items-center justify-center bg-[#0a0a0a] px-6 py-20 text-white sm:py-24 md:py-32"
     >
       <div className="flex max-w-2xl flex-col items-center gap-6 text-center">
         <p className="text-xs tracking-[0.3em] text-white/40 uppercase">About</p>

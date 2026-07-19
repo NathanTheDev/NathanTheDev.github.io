@@ -80,7 +80,7 @@ export default function ContactSection() {
   return (
     <section
       id="contact"
-      className="relative flex min-h-screen w-full flex-col items-center justify-center bg-black px-6 py-24 text-white"
+      className="relative flex min-h-dvh w-full flex-col items-center justify-center bg-black px-6 py-24 text-white"
     >
       <CubeMotif />
 

@@ -77,32 +77,40 @@ export default function HeroSection() {
   const cubeGroupRef = useRef();
 
   return (
-    <section id="home" className="relative flex h-screen w-full flex-col overflow-hidden">
-      <div className="hero-vignette absolute inset-0" />
+    <section id="home" className="relative flex h-dvh w-full flex-col overflow-hidden">
+      <div className={`absolute inset-0 ${useStaticFallback ? "hero-vignette-dim" : "hero-vignette"}`} />
 
       {useStaticFallback ? (
-        <div className="absolute inset-0 flex flex-col items-center justify-center gap-8 px-6">
-          <StaticCubeX size={280} />
-          <p className="font-display text-center text-4xl font-semibold text-white/90 md:text-5xl">Nathan Smith</p>
+        // Own self-contained flex layout (not the absolute-positioned nav
+        // below) — that positioning is tuned for the desktop canvas's empty
+        // lower-left space and overlaps this centered content on phones.
+        <div className="relative z-10 flex h-full w-full flex-col items-center justify-center gap-8 overflow-y-auto px-6 py-10">
+          <div className="flex flex-col items-center gap-5">
+            <StaticCubeX size={200} />
+            <p className="font-display text-center text-3xl font-semibold text-white/90 sm:text-4xl">Nathan Smith</p>
+          </div>
+          <SectionMenu align="center" />
         </div>
       ) : (
-        <Canvas
-          className="absolute inset-0"
-          gl={{ alpha: true }}
-          camera={{ position: [0, 0, 13], fov: 42 }}
-          onCreated={({ camera }) => camera.lookAt(0, 1.6, 0)}
-        >
-          <CubeParallax enabled={!reducedMotion} targetRef={cubeGroupRef} />
-          <group ref={cubeGroupRef}>
-            <CubeCluster position={[0, 1.6, 0]} autoRotate={!reducedMotion} />
-          </group>
-          <Wordmark strength={reducedMotion ? 0 : 0.32} />
-        </Canvas>
-      )}
+        <>
+          <Canvas
+            className="absolute inset-0"
+            gl={{ alpha: true }}
+            camera={{ position: [0, 0, 13], fov: 42 }}
+            onCreated={({ camera }) => camera.lookAt(0, 1.6, 0)}
+          >
+            <CubeParallax enabled={!reducedMotion} targetRef={cubeGroupRef} />
+            <group ref={cubeGroupRef}>
+              <CubeCluster position={[0, 1.6, 0]} autoRotate={!reducedMotion} />
+            </group>
+            <Wordmark strength={reducedMotion ? 0 : 0.32} />
+          </Canvas>
 
-      <div className="absolute top-[58%] left-[6.5%] z-10 flex flex-col items-start">
-        <SectionMenu />
-      </div>
+          <div className="absolute top-[58%] left-[6.5%] z-10 flex flex-col items-start">
+            <SectionMenu />
+          </div>
+        </>
+      )}
     </section>
   );
 }

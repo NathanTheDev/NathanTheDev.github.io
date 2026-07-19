@@ -40,6 +40,13 @@ html {
   background: radial-gradient(circle at 50% 45%, #ffffff 0%, #cfcfcf 45%, #9a9a9a 75%, #6b6b6b 100%);
 }
 
+/* Static mobile/low-power fallback overlays white text directly on this —
+   the desktop vignette's near-white center leaves it low-contrast and
+   glaring on a phone screen, so that branch gets a dark version instead. */
+.hero-vignette-dim {
+  background: radial-gradient(circle at 50% 45%, #b8b8b8 0%, #9c9c9c 45%, #767676 75%, #4a4a4a 100%);
+}
+
 ::-webkit-scrollbar {
   width: 10px;
 }

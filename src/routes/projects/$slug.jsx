@@ -19,7 +19,7 @@ function ProjectDetail() {
 
   if (!project) {
     return (
-      <div className="flex min-h-screen w-full flex-col items-center justify-center gap-4 bg-[#0a0a0a] text-white">
+      <div className="flex min-h-dvh w-full flex-col items-center justify-center gap-4 bg-[#0a0a0a] text-white">
         <p className="text-white/60">Project not found.</p>
         <Link to="/" className="text-white underline">
           Back home
@@ -29,7 +29,7 @@ function ProjectDetail() {
   }
 
   return (
-    <div className="min-h-screen w-full bg-[#0a0a0a] px-6 py-16 text-white">
+    <div className="min-h-dvh w-full bg-[#0a0a0a] px-6 py-16 text-white">
       <div className="mx-auto flex max-w-3xl flex-col gap-8">
         <Link to="/" hash="projects" className="text-sm text-white/50 transition-colors hover:text-white">
           &larr; Back to projects
