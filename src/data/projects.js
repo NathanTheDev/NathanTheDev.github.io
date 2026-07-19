@@ -4,7 +4,7 @@ export const projects = [
     title: "Ladder MVP",
     description:
       "Lead backend engineer on Ladder, a staffing agency startup — built the backend and database systems from scratch, shipping their MVP.",
-    image: "/images/projects/project-1.svg",
+    image: "/images/projects/ladder.webp",
     tags: ["TypeScript", "Express", "Zod", "Jest", "Postgres", "Supabase"],
     links: { site: "https://ladder.inc" },
     private: true,
@@ -32,7 +32,7 @@ export const projects = [
     title: "GitRank",
     description:
       "Competitive ranking system for GitHub profiles — Elo rating and tier ranks based on repos, stars, forks, commits, issues, and PRs, plus head-to-head comparisons and a seasonal leaderboard. Built at the NextGen Ventures Hackathon.",
-    image: "/images/projects/project-4.svg",
+    image: "/images/projects/gitrank.webp",
     tags: ["TanStack Start", "React", "tRPC", "Postgres", "Prisma", "Python", "FastAPI"],
     links: { github: "https://github.com/joshua-poole/gitrank", devpost: "https://devpost.com/software/github-ranked-vqk476" },
   },
