@@ -3,7 +3,27 @@ import { usePrefersReducedMotion } from "./usePrefersReducedMotion";
 
 const SECTION_IDS = ["home", "about", "projects", "contact"];
 const PROJECTS_INDEX = SECTION_IDS.indexOf("projects");
-const ANIMATION_MS = 450;
+const SECTION_ANIMATION_MS = 450;
+// Project-to-project is driven by our own rAF easing (below) rather than
+// native scrollIntoView smooth-scroll, whose duration the browser controls
+// and which wasn't fast enough even at a shorter lock.
+const PROJECT_ANIMATION_MS = 200;
+
+function animateScrollLeft(el, target, duration) {
+  const start = el.scrollLeft;
+  const change = target - start;
+  if (change === 0) return;
+  const startTime = performance.now();
+
+  function step(now) {
+    const t = Math.min(1, (now - startTime) / duration);
+    const eased = 1 - (1 - t) ** 3;
+    el.scrollTo({ left: start + change * eased, behavior: "instant" });
+    if (t < 1) requestAnimationFrame(step);
+  }
+
+  requestAnimationFrame(step);
+}
 
 function currentSectionIndex() {
   const scrollPos = document.body.scrollTop;
@@ -72,8 +92,8 @@ export function useSectionSnapScroll() {
         if (nextProjectIndex >= 0 && nextProjectIndex < cards.length) {
           event.preventDefault();
           lockedRef.current = true;
-          cards[nextProjectIndex].scrollIntoView({ behavior: "smooth", inline: "start", block: "nearest" });
-          unlockAfter(ANIMATION_MS);
+          animateScrollLeft(track, cards[nextProjectIndex].offsetLeft, PROJECT_ANIMATION_MS);
+          unlockAfter(PROJECT_ANIMATION_MS);
           return;
         }
       }
@@ -101,7 +121,7 @@ export function useSectionSnapScroll() {
         }
       }
 
-      unlockAfter(ANIMATION_MS);
+      unlockAfter(SECTION_ANIMATION_MS);
     }
 
     document.body.addEventListener("wheel", handleWheel, { passive: false });
