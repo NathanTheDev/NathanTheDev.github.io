@@ -68,7 +68,7 @@ const LINKS = [
 
 function CubeMotif() {
   return (
-    <div aria-hidden="true" className="mb-8 flex items-center justify-center gap-2 opacity-40">
+    <div aria-hidden="true" className="mb-5 flex items-center justify-center gap-2 opacity-40 sm:mb-8">
       {[0, 1, 2].map((i) => (
         <div key={i} className="h-3 w-3 rotate-45 border border-white/60" style={{ opacity: 1 - i * 0.25 }} />
       ))}
@@ -80,20 +80,20 @@ export default function ContactSection() {
   return (
     <section
       id="contact"
-      className="relative flex min-h-dvh w-full flex-col items-center justify-center bg-black px-6 py-24 text-white"
+      className="relative flex min-h-dvh w-full flex-col items-center justify-center bg-black px-6 py-14 text-white sm:py-20 md:py-24"
     >
       <CubeMotif />
 
       <p className="text-xs tracking-[0.3em] text-white/40 uppercase">Contact</p>
       <DistortText
         text="Let's build something."
-        className="font-display mt-4 max-w-xl text-center text-4xl font-semibold md:text-5xl"
+        className="font-display mt-3 max-w-xl text-center text-3xl font-semibold sm:text-4xl md:text-5xl"
       />
-      <p className="mt-4 max-w-md text-center text-white/50">
+      <p className="mt-3 max-w-md text-center text-white/50">
         Always open to interesting projects, collaborations, or just talking shop.
       </p>
 
-      <div className="mt-12 grid w-full max-w-2xl grid-cols-1 gap-3 sm:grid-cols-2">
+      <div className="mt-8 grid w-full max-w-2xl grid-cols-2 gap-2 sm:mt-12 sm:gap-3">
         {LINKS.map((link) => (
           <a
             key={link.label}
@@ -101,7 +101,7 @@ export default function ContactSection() {
             download={link.download}
             target={link.external ? "_blank" : undefined}
             rel={link.external ? "noopener noreferrer" : undefined}
-            className="flex items-center gap-4 rounded-xl bg-white/5 px-5 py-4 backdrop-blur-md transition-colors hover:bg-white/10"
+            className="flex items-center gap-3 rounded-xl bg-white/5 px-4 py-3 backdrop-blur-md transition-colors hover:bg-white/10 sm:gap-4 sm:px-5 sm:py-4"
           >
             <link.icon className="h-5 w-5 shrink-0 text-white/80" />
             <span className="flex flex-col overflow-hidden">
