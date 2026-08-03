@@ -24,6 +24,7 @@ const fragmentShader = /* glsl */ `
   uniform float uUseAlphaChannel;
   uniform float uDitherStrength;
   uniform float uDitherLevels;
+  uniform float uDitherPixelSize;
   varying vec2 vUv;
 
   ${DITHER_GLSL}
@@ -74,7 +75,7 @@ const fragmentShader = /* glsl */ `
     // a broken/hollow look instead of a stylized banding. Only dither real
     // photo/texture content.
     if (uDitherStrength > 0.0 && uUseAlphaChannel < 0.5) {
-      color = ditherQuantize(color, gl_FragCoord.xy, uDitherLevels, uDitherStrength);
+      color = ditherQuantize(color, gl_FragCoord.xy, uDitherLevels, uDitherStrength, uDitherPixelSize);
     }
 
     gl_FragColor = vec4(color, a);
@@ -94,6 +95,7 @@ export const DistortMaterial = shaderMaterial(
     uUseAlphaChannel: 0,
     uDitherStrength: 0.45,
     uDitherLevels: 10,
+    uDitherPixelSize: 6,
   },
   vertexShader,
   fragmentShader,

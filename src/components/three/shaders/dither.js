@@ -32,8 +32,14 @@ export const DITHER_GLSL = /* glsl */ `
     }
   }
 
-  vec3 ditherQuantize(vec3 color, vec2 fragCoord, float levels, float strength) {
-    float threshold = ditherBayerValue(fragCoord) - 0.5;
+  // pixelSize groups fragCoord into blocks before looking up the Bayer
+  // matrix, so each dither "pixel" covers a pixelSize x pixelSize block of
+  // real screen pixels instead of a single one — at pixelSize=1 the pattern
+  // is only a few device pixels wide and reads as fine noise/grain rather
+  // than the chunky, deliberately-pixelated look this site wants.
+  vec3 ditherQuantize(vec3 color, vec2 fragCoord, float levels, float strength, float pixelSize) {
+    vec2 cell = fragCoord / max(pixelSize, 1.0);
+    float threshold = ditherBayerValue(cell) - 0.5;
     vec3 shifted = color + threshold * strength / max(levels, 2.0);
     return floor(shifted * levels + 0.5) / levels;
   }

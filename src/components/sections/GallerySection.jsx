@@ -4,7 +4,7 @@ import { motion } from "framer-motion";
 import DistortText from "../three/DistortText";
 import DistortImage from "../three/DistortImage";
 import Badge from "../ui/Badge";
-import { RevealGroup, RevealItem } from "../motion/Reveal";
+import { ActiveRevealGroup, RevealItem } from "../motion/Reveal";
 import { projects } from "../../data/projects";
 
 const MotionDot = motion.span;
@@ -50,13 +50,12 @@ export default function GallerySection() {
         ref={trackRef}
         className="no-scrollbar flex h-full w-full snap-x snap-mandatory overflow-x-auto scroll-smooth"
       >
-        {projects.map((project) => (
-          <RevealGroup
+        {projects.map((project, index) => (
+          <ActiveRevealGroup
             key={project.slug}
             as="div"
             data-project-card
-            once={false}
-            amount={0.55}
+            active={activeIndex === index}
             className="flex h-full w-full shrink-0 snap-start flex-col items-center justify-center gap-3 px-6 py-16 text-center sm:gap-4 sm:py-20 md:gap-6"
           >
             <RevealItem as="div" variant="scale">
@@ -107,7 +106,7 @@ export default function GallerySection() {
                 </span>
               </Link>
             </RevealItem>
-          </RevealGroup>
+          </ActiveRevealGroup>
         ))}
       </div>
 

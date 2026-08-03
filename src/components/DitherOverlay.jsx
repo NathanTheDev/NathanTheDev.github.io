@@ -21,7 +21,7 @@ export default function DitherOverlay() {
       className="pointer-events-none fixed inset-0 z-40 opacity-[0.06] mix-blend-overlay"
       style={{
         backgroundImage: "url('/dither-tile.svg')",
-        backgroundSize: "8px 8px",
+        backgroundSize: "24px 24px",
         backgroundRepeat: "repeat",
       }}
     />

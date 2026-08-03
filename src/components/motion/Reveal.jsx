@@ -48,6 +48,39 @@ export function RevealGroup({ as = "div", className, children, once = true, amou
   );
 }
 
+// Same stagger variants as RevealGroup, but driven by an explicit `active`
+// boolean instead of whileInView/IntersectionObserver. GallerySection's
+// filmstrip already tracks which card is current via activeIndex (the same
+// state driving the dot indicators) — that's a more direct, reliable signal
+// for "this card just became active" than viewport-intersection math on an
+// element living inside a horizontally-scrolling container. Animates back
+// to hidden when active goes false, so the outgoing card visibly resets.
+export function ActiveRevealGroup({ as = "div", className, children, active, ...rest }) {
+  const reducedMotion = usePrefersReducedMotion();
+
+  if (reducedMotion) {
+    const Plain = as;
+    return (
+      <Plain className={className} {...rest}>
+        {children}
+      </Plain>
+    );
+  }
+
+  const Component = motion[as] ?? motion.div;
+  return (
+    <Component
+      className={className}
+      initial="hidden"
+      animate={active ? "show" : "hidden"}
+      variants={containerVariants}
+      {...rest}
+    >
+      {children}
+    </Component>
+  );
+}
+
 export function RevealItem({ as = "div", className, variant = "slide", children }) {
   const reducedMotion = usePrefersReducedMotion();
   if (reducedMotion) {
