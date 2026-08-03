@@ -10,7 +10,7 @@ import { applyDither } from "./shaders/applyDither";
 // already-dithered material.
 function ditherRef(material) {
   if (material && !material.userData.__dithered) {
-    applyDither(material);
+    applyDither(material, { strength: 0.55, levels: 8, pixelSize: 4 });
     material.userData.__dithered = true;
   }
 }

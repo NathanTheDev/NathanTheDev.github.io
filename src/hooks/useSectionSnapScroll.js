@@ -7,8 +7,10 @@ const PROJECTS_INDEX = SECTION_IDS.indexOf("projects");
 const SECTION_ANIMATION_MS = 450;
 // Project-to-project is driven by framer-motion's animate() (below) rather
 // than native scrollIntoView smooth-scroll, whose duration the browser
-// controls and which wasn't fast enough even at a shorter lock.
-const PROJECT_ANIMATION_MS = 200;
+// controls. Was 200ms/easeOut, which is fast enough that it read as an
+// instant swap rather than a visible slide between cards — bumped up and
+// switched to easeInOut so the glide is actually perceptible.
+const PROJECT_ANIMATION_MS = 550;
 
 function animateScrollLeft(el, target, duration) {
   const start = el.scrollLeft;
@@ -16,7 +18,7 @@ function animateScrollLeft(el, target, duration) {
 
   animate(start, target, {
     duration: duration / 1000,
-    ease: "easeOut",
+    ease: "easeInOut",
     onUpdate: (latest) => el.scrollTo({ left: latest, behavior: "instant" }),
   });
 }

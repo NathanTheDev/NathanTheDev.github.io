@@ -18,10 +18,10 @@ export default function DitherOverlay() {
   return (
     <div
       aria-hidden="true"
-      className="pointer-events-none fixed inset-0 z-40 opacity-[0.06] mix-blend-overlay"
+      className="pointer-events-none fixed inset-0 z-40 opacity-[0.04] mix-blend-overlay"
       style={{
         backgroundImage: "url('/dither-tile.svg')",
-        backgroundSize: "24px 24px",
+        backgroundSize: "16px 16px",
         backgroundRepeat: "repeat",
       }}
     />
