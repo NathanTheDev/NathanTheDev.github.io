@@ -87,12 +87,12 @@ export default function ContactSection() {
       </Reveal>
       <DistortText
         text="Let's build something."
-        className="font-display mt-3 max-w-xl text-center text-3xl font-semibold sm:text-4xl md:text-5xl"
+        className="font-display mt-3 max-w-xl text-center text-3xl font-semibold sm:text-4xl md:text-5xl xl:text-6xl"
       />
 
       <RevealGroup
         as="div"
-        className="mt-8 grid w-full max-w-3xl grid-cols-2 gap-3 sm:mt-12 lg:grid-cols-4 lg:gap-4"
+        className="mt-8 grid w-full max-w-3xl grid-cols-2 gap-3 sm:mt-12 lg:grid-cols-4 lg:gap-4 xl:max-w-4xl"
       >
         {LINKS.map((link) => (
           <RevealItem key={link.label} as="div">

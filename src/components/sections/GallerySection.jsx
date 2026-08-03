@@ -69,7 +69,7 @@ export default function GallerySection() {
                 <DistortImage
                   src={project.image}
                   alt={project.title}
-                  className="h-28 w-auto max-w-md rounded-2xl object-cover shadow-2xl sm:h-44 md:h-72"
+                  className="h-28 w-auto max-w-md rounded-2xl object-cover shadow-2xl sm:h-44 md:h-72 xl:h-96"
                 />
               </Link>
             </RevealItem>
@@ -78,11 +78,14 @@ export default function GallerySection() {
                 <DistortText
                   as="h3"
                   text={project.title}
-                  className="font-display text-xl font-semibold text-white sm:text-3xl md:text-5xl"
+                  className="font-display text-xl font-semibold text-white sm:text-3xl md:text-5xl xl:text-6xl"
                 />
               </Link>
             </RevealItem>
-            <RevealItem as="p" className="line-clamp-2 max-w-lg text-sm text-white/60 sm:line-clamp-3 sm:text-base">
+            <RevealItem
+              as="p"
+              className="line-clamp-2 max-w-lg text-sm text-white/60 sm:line-clamp-3 sm:text-base xl:max-w-xl xl:text-lg"
+            >
               {project.description}
             </RevealItem>
             <RevealItem as="div" className="flex flex-wrap justify-center gap-1.5 sm:gap-2">
