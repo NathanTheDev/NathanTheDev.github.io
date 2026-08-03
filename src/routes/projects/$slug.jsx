@@ -2,6 +2,9 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { getProjectBySlug } from "../../data/projects";
 import Badge from "../../components/ui/Badge";
 import Button from "../../components/ui/Button";
+import DistortText from "../../components/three/DistortText";
+import DistortImage from "../../components/three/DistortImage";
+import { RevealGroup, RevealItem } from "../../components/motion/Reveal";
 
 function GitHubIcon(props) {
   return (
@@ -32,45 +35,59 @@ function ProjectDetail() {
 
   return (
     <div className="min-h-dvh w-full bg-surface px-6 py-16 text-white">
-      <div className="mx-auto flex max-w-3xl flex-col gap-8">
-        <Link to="/" hash="projects" className="text-sm text-white/50 transition-colors hover:text-white">
-          &larr; Back to projects
-        </Link>
+      <RevealGroup as="div" className="mx-auto flex max-w-3xl flex-col gap-8">
+        <RevealItem as="div">
+          <Link to="/" hash="projects" className="text-sm text-white/50 transition-colors hover:text-white">
+            &larr; Back to projects
+          </Link>
+        </RevealItem>
 
-        <img src={project.image} alt={project.title} className="w-full rounded-2xl border border-white/10" />
+        <RevealItem as="div" variant="scale" className="flex justify-center">
+          {/* DistortImage sizes off a fixed height (its proven usage
+              pattern, matching GallerySection's thumbnails) rather than
+              w-full — its inline-block wrapper can't resolve a percentage
+              width against an auto-width ancestor. */}
+          <DistortImage
+            src={project.image}
+            alt={project.title}
+            className="h-56 w-auto max-w-full rounded-2xl border border-white/10 object-cover sm:h-72 md:h-96"
+          />
+        </RevealItem>
 
         <div className="flex flex-col gap-4">
-          <div className="flex flex-wrap items-center gap-3">
-            <h1 className="font-display text-4xl font-semibold">{project.title}</h1>
+          <RevealItem as="div" className="flex flex-wrap items-center gap-3">
+            <DistortText as="h1" text={project.title} className="font-display text-4xl font-semibold" />
             {project.status && (
               <Badge variant="status" size="sm">
                 {project.status}
               </Badge>
             )}
-          </div>
+          </RevealItem>
 
-          <div className="flex flex-wrap gap-2">
+          <RevealItem as="div" className="flex flex-wrap gap-2">
             {project.tags.map((tag) => (
               <Badge key={tag} size="sm">
                 {tag}
               </Badge>
             ))}
-          </div>
+          </RevealItem>
 
-          <p className="leading-relaxed text-white/70">{project.longDescription ?? project.description}</p>
+          <RevealItem as="p" className="leading-relaxed text-white/70">
+            {project.longDescription ?? project.description}
+          </RevealItem>
 
           {project.highlights && (
-            <ul className="flex flex-col gap-3">
+            <RevealItem as="ul" className="flex flex-col gap-3">
               {project.highlights.map((highlight) => (
                 <li key={highlight} className="flex gap-3 leading-relaxed text-white/70">
                   <span aria-hidden="true" className="mt-2.5 h-1 w-1 shrink-0 rounded-full bg-white/40" />
                   {highlight}
                 </li>
               ))}
-            </ul>
+            </RevealItem>
           )}
 
-          <div className="mt-2 flex flex-wrap items-center gap-3">
+          <RevealItem as="div" className="mt-2 flex flex-wrap items-center gap-3">
             {project.links?.site && (
               <Button href={project.links.site} external>
                 Company site
@@ -92,9 +109,9 @@ function ProjectDetail() {
               </Button>
             )}
             {project.private && <span className="text-sm text-white/40">Private repo</span>}
-          </div>
+          </RevealItem>
         </div>
-      </div>
+      </RevealGroup>
     </div>
   );
 }

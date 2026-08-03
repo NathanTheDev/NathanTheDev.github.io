@@ -7,20 +7,30 @@ const containerVariants = {
   show: { transition: { staggerChildren: 0.06 } },
 };
 
-const itemVariants = {
-  hidden: { opacity: 0, y: 12 },
-  show: { opacity: 1, y: 0, transition: { duration: 0.4, ease: [0.16, 1, 0.3, 1] } },
+const ITEM_VARIANTS = {
+  slide: {
+    hidden: { opacity: 0, y: 12 },
+    show: { opacity: 1, y: 0, transition: { duration: 0.4, ease: [0.16, 1, 0.3, 1] } },
+  },
+  scale: {
+    hidden: { opacity: 0, scale: 0.94 },
+    show: { opacity: 1, scale: 1, transition: { duration: 0.5, ease: [0.16, 1, 0.3, 1] } },
+  },
 };
 
 // Wraps a list of RevealItem children (e.g. the About stack pills, Contact
 // link cards) so they fade/slide in one after another instead of all at
 // once. Pair every RevealGroup with RevealItem children, not plain nodes.
-export function RevealGroup({ as = "div", className, children, once = true, amount = 0.4 }) {
+export function RevealGroup({ as = "div", className, children, once = true, amount = 0.4, ...rest }) {
   const reducedMotion = usePrefersReducedMotion();
 
   if (reducedMotion) {
     const Plain = as;
-    return <Plain className={className}>{children}</Plain>;
+    return (
+      <Plain className={className} {...rest}>
+        {children}
+      </Plain>
+    );
   }
 
   const Component = motion[as] ?? motion.div;
@@ -31,13 +41,14 @@ export function RevealGroup({ as = "div", className, children, once = true, amou
       whileInView="show"
       viewport={{ once, amount }}
       variants={containerVariants}
+      {...rest}
     >
       {children}
     </Component>
   );
 }
 
-export function RevealItem({ as = "div", className, children }) {
+export function RevealItem({ as = "div", className, variant = "slide", children }) {
   const reducedMotion = usePrefersReducedMotion();
   if (reducedMotion) {
     const Plain = as;
@@ -45,7 +56,7 @@ export function RevealItem({ as = "div", className, children }) {
   }
   const Component = motion[as] ?? motion.div;
   return (
-    <Component className={className} variants={itemVariants}>
+    <Component className={className} variants={ITEM_VARIANTS[variant]}>
       {children}
     </Component>
   );
