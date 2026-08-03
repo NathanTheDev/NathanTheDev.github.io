@@ -1,4 +1,6 @@
 import DistortText from "../three/DistortText";
+import Button from "../ui/Button";
+import Reveal, { RevealGroup, RevealItem } from "../motion/Reveal";
 
 function GitHubIcon(props) {
   return (
@@ -80,34 +82,36 @@ export default function ContactSection() {
   return (
     <section
       id="contact"
-      className="relative flex min-h-dvh w-full flex-col items-center justify-center bg-black px-6 py-14 text-white sm:py-20 md:py-24"
+      className="relative flex min-h-dvh w-full flex-col items-center justify-center bg-surface px-6 py-14 text-white sm:py-20 md:py-24"
     >
       <CubeMotif />
 
-      <p className="text-xs tracking-[0.3em] text-white/40 uppercase">Contact</p>
+      <Reveal as="p" className="text-xs tracking-[0.3em] text-white/40 uppercase">
+        Contact
+      </Reveal>
       <DistortText
         text="Let's build something."
         className="font-display mt-3 max-w-xl text-center text-3xl font-semibold sm:text-4xl md:text-5xl"
       />
 
-      <div className="mt-8 grid w-full max-w-2xl grid-cols-2 gap-2 sm:mt-12 sm:gap-3">
+      <RevealGroup as="div" className="mt-8 grid w-full max-w-2xl grid-cols-2 gap-2 sm:mt-12 sm:gap-3">
         {LINKS.map((link) => (
-          <a
-            key={link.label}
-            href={link.href}
-            download={link.download}
-            target={link.external ? "_blank" : undefined}
-            rel={link.external ? "noopener noreferrer" : undefined}
-            className="flex items-center gap-3 rounded-xl bg-white/5 px-4 py-3 backdrop-blur-md transition-colors hover:bg-white/10 sm:gap-4 sm:px-5 sm:py-4"
-          >
-            <link.icon className="h-5 w-5 shrink-0 text-white/80" />
-            <span className="flex flex-col overflow-hidden">
-              <span className="text-sm font-medium text-white">{link.label}</span>
-              <span className="truncate text-xs text-white/50">{link.sub}</span>
-            </span>
-          </a>
+          <RevealItem key={link.label} as="div">
+            <Button
+              href={link.href}
+              download={link.download}
+              external={link.external}
+              className="sm:gap-4 sm:px-5 sm:py-4"
+            >
+              <link.icon className="h-5 w-5 shrink-0 text-white/80" />
+              <span className="flex flex-col overflow-hidden">
+                <span className="text-sm font-medium text-white">{link.label}</span>
+                <span className="truncate text-xs text-white/50">{link.sub}</span>
+              </span>
+            </Button>
+          </RevealItem>
         ))}
-      </div>
+      </RevealGroup>
     </section>
   );
 }

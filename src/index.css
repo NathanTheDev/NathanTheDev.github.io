@@ -20,6 +20,12 @@
 
 @theme {
   --font-display: "Bourbon St", "Fraunces", ui-serif, serif;
+
+  /* Single source of truth for the site's near-black surface — was
+     previously duplicated as bg-[#0a0a0a] in some sections and bg-black in
+     others. Everything (including html/body below) should read from this. */
+  --color-surface: #0a0a0a;
+  --color-accent: #fbbf24;
 }
 
 html, body {
@@ -27,7 +33,7 @@ html, body {
   padding: 0;
   width: 100%;
   height: 100%;
-  background: #0a0a0a;
+  background: var(--color-surface);
   color: white;
   overflow-x: hidden;
 }

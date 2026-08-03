@@ -1,28 +1,24 @@
 import { useEffect, useRef } from "react";
+import { animate } from "framer-motion";
 import { usePrefersReducedMotion } from "./usePrefersReducedMotion";
 
 const SECTION_IDS = ["home", "about", "projects", "contact"];
 const PROJECTS_INDEX = SECTION_IDS.indexOf("projects");
 const SECTION_ANIMATION_MS = 450;
-// Project-to-project is driven by our own rAF easing (below) rather than
-// native scrollIntoView smooth-scroll, whose duration the browser controls
-// and which wasn't fast enough even at a shorter lock.
+// Project-to-project is driven by framer-motion's animate() (below) rather
+// than native scrollIntoView smooth-scroll, whose duration the browser
+// controls and which wasn't fast enough even at a shorter lock.
 const PROJECT_ANIMATION_MS = 200;
 
 function animateScrollLeft(el, target, duration) {
   const start = el.scrollLeft;
-  const change = target - start;
-  if (change === 0) return;
-  const startTime = performance.now();
+  if (start === target) return;
 
-  function step(now) {
-    const t = Math.min(1, (now - startTime) / duration);
-    const eased = 1 - (1 - t) ** 3;
-    el.scrollTo({ left: start + change * eased, behavior: "instant" });
-    if (t < 1) requestAnimationFrame(step);
-  }
-
-  requestAnimationFrame(step);
+  animate(start, target, {
+    duration: duration / 1000,
+    ease: "easeOut",
+    onUpdate: (latest) => el.scrollTo({ left: latest, behavior: "instant" }),
+  });
 }
 
 function currentSectionIndex() {

@@ -1,4 +1,5 @@
 import { usePrefersReducedMotion } from "../../hooks/usePrefersReducedMotion";
+import { useActiveSection } from "../../hooks/useActiveSection";
 import DistortText from "../three/DistortText";
 
 const LINKS = [
@@ -7,7 +8,9 @@ const LINKS = [
   { label: "Contact", href: "#contact" },
 ];
 
-const LINK_CLASS = "font-display text-3xl font-bold text-white/70 uppercase sm:text-4xl md:text-5xl";
+const SECTION_IDS = ["home", "about", "projects", "contact"];
+
+const LINK_CLASS = "font-display text-3xl font-bold uppercase sm:text-4xl md:text-5xl transition-colors";
 
 function GitHubIcon(props) {
   return (
@@ -28,6 +31,7 @@ function GitHubIcon(props) {
 // a link gives the same liquid warp as the rest of the site's display text.
 export default function SectionMenu({ align = "start" }) {
   const reducedMotion = usePrefersReducedMotion();
+  const activeId = useActiveSection(SECTION_IDS);
 
   function handleClick(event, href) {
     const target = document.getElementById(href.slice(1));
@@ -38,19 +42,23 @@ export default function SectionMenu({ align = "start" }) {
 
   return (
     <nav className={`flex flex-col gap-3 ${align === "center" ? "items-center" : "items-start"}`}>
-      {LINKS.map((link) => (
-        <a key={link.href} href={link.href} onClick={(event) => handleClick(event, link.href)}>
-          <DistortText
-            as="span"
-            text={link.label.toUpperCase()}
-            className={LINK_CLASS}
-            fontWeight={700}
-            strength={0.4}
-            rgbShiftMax={0.005}
-            falloffRadius={0.6}
-          />
-        </a>
-      ))}
+      {LINKS.map((link) => {
+        const isActive = activeId === link.href.slice(1);
+        return (
+          <a key={link.href} href={link.href} onClick={(event) => handleClick(event, link.href)}>
+            <DistortText
+              as="span"
+              text={link.label.toUpperCase()}
+              className={`${LINK_CLASS} ${isActive ? "text-white" : "text-white/70"}`}
+              color={isActive ? "#ffffff" : "rgba(255,255,255,0.7)"}
+              fontWeight={700}
+              strength={0.4}
+              rgbShiftMax={0.005}
+              falloffRadius={0.6}
+            />
+          </a>
+        );
+      })}
       <a
         href="https://github.com/NathanTheDev"
         target="_blank"

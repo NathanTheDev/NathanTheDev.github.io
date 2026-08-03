@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import { Link } from "@tanstack/react-router";
 import DistortText from "../three/DistortText";
 import DistortImage from "../three/DistortImage";
+import Badge from "../ui/Badge";
 import { projects } from "../../data/projects";
 
 // One project fills the viewport at a time in a horizontal filmstrip.
@@ -31,7 +32,7 @@ export default function GallerySection() {
   }, []);
 
   return (
-    <section id="projects" className="relative h-dvh w-full overflow-hidden bg-[#0a0a0a]">
+    <section id="projects" className="relative h-dvh w-full overflow-hidden bg-surface">
       <div className="pointer-events-none absolute inset-x-0 top-8 z-10 flex flex-col items-center gap-1 text-center sm:top-16 sm:gap-2">
         <p className="text-xs tracking-[0.3em] text-white/40 uppercase">Projects</p>
         <DistortText
@@ -53,9 +54,9 @@ export default function GallerySection() {
           >
             <Link to="/projects/$slug" params={{ slug: project.slug }} className="relative inline-block">
               {project.status && (
-                <span className="absolute top-2 left-2 z-10 rounded-full bg-amber-400/90 px-2.5 py-1 text-xs font-medium text-black">
+                <Badge variant="status" size="sm" className="absolute top-2 left-2 z-10">
                   {project.status}
-                </span>
+                </Badge>
               )}
               <DistortImage
                 src={project.image}
@@ -75,12 +76,9 @@ export default function GallerySection() {
             </p>
             <div className="flex flex-wrap justify-center gap-1.5 sm:gap-2">
               {project.tags.map((tag) => (
-                <span
-                  key={tag}
-                  className="rounded-full bg-white/5 px-3 py-1 text-xs text-white/70 backdrop-blur-md sm:px-4 sm:py-1.5 sm:text-sm"
-                >
+                <Badge key={tag} size="sm">
                   {tag}
-                </span>
+                </Badge>
               ))}
             </div>
             <Link

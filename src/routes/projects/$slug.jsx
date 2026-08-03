@@ -1,5 +1,7 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { getProjectBySlug } from "../../data/projects";
+import Badge from "../../components/ui/Badge";
+import Button from "../../components/ui/Button";
 
 function GitHubIcon(props) {
   return (
@@ -19,7 +21,7 @@ function ProjectDetail() {
 
   if (!project) {
     return (
-      <div className="flex min-h-dvh w-full flex-col items-center justify-center gap-4 bg-[#0a0a0a] text-white">
+      <div className="flex min-h-dvh w-full flex-col items-center justify-center gap-4 bg-surface text-white">
         <p className="text-white/60">Project not found.</p>
         <Link to="/" className="text-white underline">
           Back home
@@ -29,7 +31,7 @@ function ProjectDetail() {
   }
 
   return (
-    <div className="min-h-dvh w-full bg-[#0a0a0a] px-6 py-16 text-white">
+    <div className="min-h-dvh w-full bg-surface px-6 py-16 text-white">
       <div className="mx-auto flex max-w-3xl flex-col gap-8">
         <Link to="/" hash="projects" className="text-sm text-white/50 transition-colors hover:text-white">
           &larr; Back to projects
@@ -41,17 +43,17 @@ function ProjectDetail() {
           <div className="flex flex-wrap items-center gap-3">
             <h1 className="font-display text-4xl font-semibold">{project.title}</h1>
             {project.status && (
-              <span className="rounded-full bg-amber-400/90 px-3 py-1 text-xs font-medium text-black">
+              <Badge variant="status" size="sm">
                 {project.status}
-              </span>
+              </Badge>
             )}
           </div>
 
           <div className="flex flex-wrap gap-2">
             {project.tags.map((tag) => (
-              <span key={tag} className="rounded-full bg-white/5 px-3 py-1 text-xs text-white/70 backdrop-blur-md">
+              <Badge key={tag} size="sm">
                 {tag}
-              </span>
+              </Badge>
             ))}
           </div>
 
@@ -70,45 +72,24 @@ function ProjectDetail() {
 
           <div className="mt-2 flex flex-wrap items-center gap-3">
             {project.links?.site && (
-              <a
-                href={project.links.site}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="rounded-xl bg-white/5 px-5 py-3 text-sm text-white backdrop-blur-md transition-colors hover:bg-white/10"
-              >
+              <Button href={project.links.site} external>
                 Company site
-              </a>
+              </Button>
             )}
             {project.links?.github && (
-              <a
-                href={project.links.github}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="flex items-center gap-2 rounded-xl bg-white/5 px-5 py-3 text-sm text-white backdrop-blur-md transition-colors hover:bg-white/10"
-              >
-                <GitHubIcon className="h-4 w-4" />
+              <Button href={project.links.github} external icon={GitHubIcon}>
                 View on GitHub
-              </a>
+              </Button>
             )}
             {project.links?.live && (
-              <a
-                href={project.links.live}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="rounded-xl bg-white/5 px-5 py-3 text-sm text-white backdrop-blur-md transition-colors hover:bg-white/10"
-              >
+              <Button href={project.links.live} external>
                 Live demo
-              </a>
+              </Button>
             )}
             {project.links?.devpost && (
-              <a
-                href={project.links.devpost}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="rounded-xl bg-white/5 px-5 py-3 text-sm text-white backdrop-blur-md transition-colors hover:bg-white/10"
-              >
+              <Button href={project.links.devpost} external>
                 View on Devpost
-              </a>
+              </Button>
             )}
             {project.private && <span className="text-sm text-white/40">Private repo</span>}
           </div>
