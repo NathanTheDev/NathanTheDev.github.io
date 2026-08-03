@@ -1,6 +1,19 @@
 import { useMemo, useRef } from "react";
 import { useFrame } from "@react-three/fiber";
 import { generateCubeClusterLayout } from "./cubeLayout";
+import { applyDither } from "./shaders/applyDither";
+
+// meshStandardMaterial runs three's own lit shader pipeline (not
+// distortMaterial), so dithering has to be patched in via onBeforeCompile
+// instead of written directly into a shader source string. Guarded so
+// React's per-render ref-callback identity churn doesn't re-patch an
+// already-dithered material.
+function ditherRef(material) {
+  if (material && !material.userData.__dithered) {
+    applyDither(material);
+    material.userData.__dithered = true;
+  }
+}
 
 // Two tilted rings of small cubes, spinning independently in opposite
 // directions, cross each other face-on to the camera to form an X — plus a
@@ -37,14 +50,14 @@ export default function CubeCluster({ autoRotate = true, ...groupProps }) {
 
       <mesh ref={centerRef} scale={layout.center.scale}>
         <boxGeometry args={[1, 1, 1]} />
-        <meshStandardMaterial color="#ffffff" roughness={0.35} metalness={0} />
+        <meshStandardMaterial ref={ditherRef} color="#ffffff" roughness={0.35} metalness={0} />
       </mesh>
 
       <group ref={ringBigRef} rotation={[layout.ringBig.tiltX, 0, layout.ringBig.tiltZ]}>
         {layout.ringBig.cubes.map((cube, i) => (
           <mesh key={i} position={cube.position} rotation={cube.rotation} scale={cube.scale}>
             <boxGeometry args={[1, 1, 1]} />
-            <meshStandardMaterial color="#ffffff" roughness={0.35} metalness={0} />
+            <meshStandardMaterial ref={ditherRef} color="#ffffff" roughness={0.35} metalness={0} />
           </mesh>
         ))}
       </group>
@@ -53,7 +66,7 @@ export default function CubeCluster({ autoRotate = true, ...groupProps }) {
         {layout.ringSmall.cubes.map((cube, i) => (
           <mesh key={i} position={cube.position} rotation={cube.rotation} scale={cube.scale}>
             <boxGeometry args={[1, 1, 1]} />
-            <meshStandardMaterial color="#ffffff" roughness={0.35} metalness={0} />
+            <meshStandardMaterial ref={ditherRef} color="#ffffff" roughness={0.35} metalness={0} />
           </mesh>
         ))}
       </group>

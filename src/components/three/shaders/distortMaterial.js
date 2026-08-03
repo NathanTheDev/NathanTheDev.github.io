@@ -1,6 +1,7 @@
 import * as THREE from "three";
 import { shaderMaterial } from "@react-three/drei";
 import { extend } from "@react-three/fiber";
+import { DITHER_GLSL } from "./dither";
 
 const vertexShader = /* glsl */ `
   varying vec2 vUv;
@@ -21,7 +22,11 @@ const fragmentShader = /* glsl */ `
   uniform float uFalloffRadius;
   uniform vec2 uAspect;
   uniform float uUseAlphaChannel;
+  uniform float uDitherStrength;
+  uniform float uDitherLevels;
   varying vec2 vUv;
+
+  ${DITHER_GLSL}
 
   void main() {
     vec2 uv = vUv;
@@ -63,7 +68,12 @@ const fragmentShader = /* glsl */ `
     float b = mix(sampB.b, sampB.a, uUseAlphaChannel);
     float a = max(max(sampR.a, sampG.a), sampB.a);
 
-    gl_FragColor = vec4(r, g, b, a);
+    vec3 color = vec3(r, g, b);
+    if (uDitherStrength > 0.0) {
+      color = ditherQuantize(color, gl_FragCoord.xy, uDitherLevels, uDitherStrength);
+    }
+
+    gl_FragColor = vec4(color, a);
   }
 `;
 
@@ -78,6 +88,8 @@ export const DistortMaterial = shaderMaterial(
     uFalloffRadius: 0.5,
     uAspect: new THREE.Vector2(1, 1),
     uUseAlphaChannel: 0,
+    uDitherStrength: 1,
+    uDitherLevels: 6,
   },
   vertexShader,
   fragmentShader,

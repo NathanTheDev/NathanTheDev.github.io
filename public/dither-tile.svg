@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 4 4">
+  <rect x="0" y="0" width="1" height="1" fill="#fff" opacity="0" />
+  <rect x="1" y="0" width="1" height="1" fill="#fff" opacity="0.5" />
+  <rect x="2" y="0" width="1" height="1" fill="#fff" opacity="0.125" />
+  <rect x="3" y="0" width="1" height="1" fill="#fff" opacity="0.625" />
+  <rect x="0" y="1" width="1" height="1" fill="#fff" opacity="0.75" />
+  <rect x="1" y="1" width="1" height="1" fill="#fff" opacity="0.25" />
+  <rect x="2" y="1" width="1" height="1" fill="#fff" opacity="0.875" />
+  <rect x="3" y="1" width="1" height="1" fill="#fff" opacity="0.375" />
+  <rect x="0" y="2" width="1" height="1" fill="#fff" opacity="0.1875" />
+  <rect x="1" y="2" width="1" height="1" fill="#fff" opacity="0.6875" />
+  <rect x="2" y="2" width="1" height="1" fill="#fff" opacity="0.0625" />
+  <rect x="3" y="2" width="1" height="1" fill="#fff" opacity="0.5625" />
+  <rect x="0" y="3" width="1" height="1" fill="#fff" opacity="0.9375" />
+  <rect x="1" y="3" width="1" height="1" fill="#fff" opacity="0.4375" />
+  <rect x="2" y="3" width="1" height="1" fill="#fff" opacity="0.8125" />
+  <rect x="3" y="3" width="1" height="1" fill="#fff" opacity="0.3125" />
+</svg>

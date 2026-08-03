@@ -14,6 +14,8 @@ export default function DistortedPlane({
   strength = 1,
   rgbShiftMax = 0.02,
   falloffRadius = 0.5,
+  ditherStrength = 1,
+  ditherLevels = 6,
   useAlphaChannel = false,
   doubleSided = false,
   alwaysOnTop = false,
@@ -58,6 +60,8 @@ export default function DistortedPlane({
         uFalloffRadius={falloffRadius}
         uAspect={[1, planeHeight / planeWidth]}
         uUseAlphaChannel={useAlphaChannel ? 1 : 0}
+        uDitherStrength={ditherStrength}
+        uDitherLevels={ditherLevels}
         side={doubleSided ? THREE.DoubleSide : THREE.FrontSide}
         depthTest={!alwaysOnTop}
         transparent
