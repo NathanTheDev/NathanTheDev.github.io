@@ -69,7 +69,11 @@ const fragmentShader = /* glsl */ `
     float a = max(max(sampR.a, sampG.a), sampB.a);
 
     vec3 color = vec3(r, g, b);
-    if (uDitherStrength > 0.0) {
+    // Text (uUseAlphaChannel=1) repurposes r/g/b as a coverage value, not a
+    // real color to quantize — dithering it stipples the glyph edges into
+    // a broken/hollow look instead of a stylized banding. Only dither real
+    // photo/texture content.
+    if (uDitherStrength > 0.0 && uUseAlphaChannel < 0.5) {
       color = ditherQuantize(color, gl_FragCoord.xy, uDitherLevels, uDitherStrength);
     }
 
@@ -88,8 +92,8 @@ export const DistortMaterial = shaderMaterial(
     uFalloffRadius: 0.5,
     uAspect: new THREE.Vector2(1, 1),
     uUseAlphaChannel: 0,
-    uDitherStrength: 1,
-    uDitherLevels: 6,
+    uDitherStrength: 0.45,
+    uDitherLevels: 10,
   },
   vertexShader,
   fragmentShader,
