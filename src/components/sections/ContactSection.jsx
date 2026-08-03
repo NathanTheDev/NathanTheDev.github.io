@@ -1,6 +1,8 @@
 import DistortText from "../three/DistortText";
+import StaticCubeX from "../three/StaticCubeX";
 import Button from "../ui/Button";
 import Reveal, { RevealGroup, RevealItem } from "../motion/Reveal";
+import MagneticTile from "../motion/MagneticTile";
 
 function GitHubIcon(props) {
   return (
@@ -68,23 +70,17 @@ const LINKS = [
   },
 ];
 
-function CubeMotif() {
-  return (
-    <div aria-hidden="true" className="mb-5 flex items-center justify-center gap-2 opacity-40 sm:mb-8">
-      {[0, 1, 2].map((i) => (
-        <div key={i} className="h-3 w-3 rotate-45 border border-white/60" style={{ opacity: 1 - i * 0.25 }} />
-      ))}
-    </div>
-  );
-}
-
 export default function ContactSection() {
   return (
     <section
       id="contact"
       className="relative flex min-h-dvh w-full flex-col items-center justify-center bg-surface px-6 py-14 text-white sm:py-20 md:py-24"
     >
-      <CubeMotif />
+      {/* Bookends the Hero's cube cluster — same "X" motif, much smaller and
+          static, closing the page on the identity it opened with. */}
+      <div className="mb-5 opacity-40 sm:mb-8">
+        <StaticCubeX size={72} />
+      </div>
 
       <Reveal as="p" className="text-xs tracking-[0.3em] text-white/40 uppercase">
         Contact
@@ -94,21 +90,28 @@ export default function ContactSection() {
         className="font-display mt-3 max-w-xl text-center text-3xl font-semibold sm:text-4xl md:text-5xl"
       />
 
-      <RevealGroup as="div" className="mt-8 grid w-full max-w-2xl grid-cols-2 gap-2 sm:mt-12 sm:gap-3">
+      <RevealGroup
+        as="div"
+        className="mt-8 grid w-full max-w-3xl grid-cols-2 gap-3 sm:mt-12 lg:grid-cols-4 lg:gap-4"
+      >
         {LINKS.map((link) => (
           <RevealItem key={link.label} as="div">
-            <Button
-              href={link.href}
-              download={link.download}
-              external={link.external}
-              className="sm:gap-4 sm:px-5 sm:py-4"
-            >
-              <link.icon className="h-5 w-5 shrink-0 text-white/80" />
-              <span className="flex flex-col overflow-hidden">
-                <span className="text-sm font-medium text-white">{link.label}</span>
-                <span className="truncate text-xs text-white/50">{link.sub}</span>
-              </span>
-            </Button>
+            <MagneticTile>
+              <Button
+                href={link.href}
+                download={link.download}
+                external={link.external}
+                layout="column"
+                icon={link.icon}
+                iconClassName="h-6 w-6 shrink-0 text-white/80"
+                className="w-full"
+              >
+                <span className="flex flex-col items-center overflow-hidden">
+                  <span className="text-sm font-medium text-white">{link.label}</span>
+                  <span className="truncate text-xs text-white/50">{link.sub}</span>
+                </span>
+              </Button>
+            </MagneticTile>
           </RevealItem>
         ))}
       </RevealGroup>
