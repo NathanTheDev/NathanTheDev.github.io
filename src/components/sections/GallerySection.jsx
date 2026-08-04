@@ -1,19 +1,23 @@
 import { useEffect, useRef, useState } from "react";
 import { Link } from "@tanstack/react-router";
 import { motion } from "framer-motion";
+import ShelfScene from "../three/ShelfScene";
 import DistortText from "../three/DistortText";
 import DistortImage from "../three/DistortImage";
 import Badge from "../ui/Badge";
 import { ActiveRevealGroup, RevealItem } from "../motion/Reveal";
 import { projects } from "../../data/projects";
+import { useDeviceCapability } from "../../hooks/useDeviceCapability";
+import { usePrefersReducedMotion } from "../../hooks/usePrefersReducedMotion";
 
 const MotionDot = motion.span;
 
-// One project fills the viewport at a time in a horizontal filmstrip.
-// useSectionSnapScroll drives it on wheel input (one tick = one project);
-// snap-x/snap-start here just make touch-swipe and any native horizontal
-// scrolling (trackpad shift-scroll, arrow-drag) land cleanly on a card too.
-export default function GallerySection() {
+// Shared by both branches below: tracks which project the horizontal
+// #projects-track (real filmstrip on touch/reduced-motion, a hidden scroll
+// proxy on the 3D branch) is currently sitting on. useSectionSnapScroll.js
+// drives that scroll position on wheel input; this just mirrors it into
+// React state for the HUD/dots to read.
+function useActiveProjectIndex() {
   const trackRef = useRef();
   const [activeIndex, setActiveIndex] = useState(0);
 
@@ -34,6 +38,111 @@ export default function GallerySection() {
     track.addEventListener("scroll", handleScroll, { passive: true });
     return () => track.removeEventListener("scroll", handleScroll);
   }, []);
+
+  return { trackRef, activeIndex };
+}
+
+function ProjectDots({ activeIndex }) {
+  return (
+    <div className="flex items-center gap-2">
+      {projects.map((project, i) => (
+        <MotionDot
+          key={project.slug}
+          className="block rounded-full bg-white/25"
+          animate={{
+            width: i === activeIndex ? 18 : 6,
+            height: 6,
+            backgroundColor: i === activeIndex ? "#fbbf24" : "rgba(255,255,255,0.25)",
+          }}
+          transition={{ type: "spring", stiffness: 300, damping: 26 }}
+        />
+      ))}
+    </div>
+  );
+}
+
+// Full 3D shelf: cards recede into depth, camera dollies through them as the
+// hidden #projects-track scrolls. Desktop/capable devices only — the wheel
+// gesture this leans on doesn't exist on touch, and a full-viewport r3f
+// scene isn't worth the cost on low-power hardware.
+function ShelfGallery() {
+  const { trackRef, activeIndex } = useActiveProjectIndex();
+  const active = projects[activeIndex] ?? projects[0];
+
+  return (
+    <section id="projects" className="relative h-dvh w-full overflow-hidden bg-surface">
+      <div className="pointer-events-none absolute inset-x-0 top-8 z-10 flex flex-col items-center gap-1 text-center sm:top-16 sm:gap-2">
+        <p className="text-xs tracking-[0.3em] text-white/40 uppercase">Projects</p>
+        <DistortText
+          text="Selected work"
+          className="font-display text-2xl font-semibold text-white sm:text-3xl md:text-4xl"
+        />
+      </div>
+
+      <ShelfScene activeIndex={activeIndex} />
+
+      {/* Invisible scroll proxy: purely a geometry source for useSectionSnapScroll's
+          offsetLeft math and a catch-all for native horizontal gestures (trackpad
+          shift-scroll, edge cases the wheel handler's deltaY-only check misses) —
+          see that hook's comments. All visible content lives in ShelfScene/HUD. */}
+      <div
+        id="projects-track"
+        ref={trackRef}
+        aria-hidden="true"
+        className="no-scrollbar absolute inset-0 flex h-full w-full snap-x snap-mandatory overflow-x-auto opacity-0"
+      >
+        {projects.map((project) => (
+          <div key={project.slug} data-project-card className="h-full w-full shrink-0 snap-start" />
+        ))}
+      </div>
+
+      <div className="pointer-events-none absolute inset-x-0 bottom-8 z-10 grid grid-cols-1 items-end gap-5 px-6 text-center sm:bottom-12 sm:grid-cols-[1fr_auto_1fr] sm:px-10 sm:text-left">
+        <div className="order-2 mx-auto max-w-md sm:order-1 sm:mx-0">
+          <p className="text-xs tracking-[0.3em] text-white/40 uppercase">
+            {String(activeIndex + 1).padStart(2, "0")} / {String(projects.length).padStart(2, "0")}
+          </p>
+          <h3 className="font-display mt-1 text-2xl font-semibold text-white sm:text-3xl md:text-4xl">
+            {active.title}
+          </h3>
+          <p className="mt-2 line-clamp-2 text-sm text-white/60 sm:text-base">{active.description}</p>
+          <div className="mt-3 flex flex-wrap justify-center gap-1.5 sm:justify-start">
+            {active.tags.map((tag) => (
+              <Badge key={tag} size="sm">
+                {tag}
+              </Badge>
+            ))}
+          </div>
+          <Link
+            to="/projects/$slug"
+            params={{ slug: active.slug }}
+            className="group font-display pointer-events-auto mt-4 inline-flex items-center gap-2 text-base text-white/80 underline underline-offset-4 transition-colors hover:text-white"
+          >
+            View project
+            <span aria-hidden="true" className="transition-transform group-hover:translate-x-1">
+              →
+            </span>
+          </Link>
+        </div>
+
+        <div className="order-1 sm:order-2">
+          <ProjectDots activeIndex={activeIndex} />
+        </div>
+
+        <div className="order-3 hidden sm:block" aria-hidden="true" />
+      </div>
+    </section>
+  );
+}
+
+// One project fills the viewport at a time in a horizontal filmstrip.
+// useSectionSnapScroll drives it on wheel input (one tick = one project);
+// snap-x/snap-start here just make touch-swipe and any native horizontal
+// scrolling (trackpad shift-scroll, arrow-drag) land cleanly on a card too.
+// This is the fallback for touch/low-power/reduced-motion devices, where the
+// 3D shelf's wheel-driven camera dolly either doesn't apply or isn't worth
+// the render cost.
+function FilmstripGallery() {
+  const { trackRef, activeIndex } = useActiveProjectIndex();
 
   return (
     <section id="projects" className="relative h-dvh w-full overflow-hidden bg-surface">
@@ -122,4 +231,15 @@ export default function GallerySection() {
       </div>
     </section>
   );
+}
+
+export default function GallerySection() {
+  const { isLowPower, isCoarsePointer } = useDeviceCapability();
+  const reducedMotion = usePrefersReducedMotion();
+
+  if (isLowPower || isCoarsePointer || reducedMotion) {
+    return <FilmstripGallery />;
+  }
+
+  return <ShelfGallery />;
 }
