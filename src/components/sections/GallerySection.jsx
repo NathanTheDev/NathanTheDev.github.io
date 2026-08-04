@@ -54,7 +54,7 @@ function ProjectDots({ activeIndex }) {
             height: 6,
             backgroundColor: i === activeIndex ? "#fbbf24" : "rgba(255,255,255,0.25)",
           }}
-          transition={{ type: "spring", stiffness: 300, damping: 26 }}
+          transition={{ type: "spring", stiffness: 600, damping: 32 }}
         />
       ))}
     </div>
@@ -225,7 +225,7 @@ function FilmstripGallery() {
             key={project.slug}
             className="h-1.5 w-1.5 rounded-full bg-white"
             animate={{ scale: i === activeIndex ? 1.4 : 1, opacity: i === activeIndex ? 1 : 0.25 }}
-            transition={{ type: "spring", stiffness: 300, damping: 20 }}
+            transition={{ type: "spring", stiffness: 600, damping: 28 }}
           />
         ))}
       </div>

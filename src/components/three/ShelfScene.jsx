@@ -99,7 +99,7 @@ function Shelf({ activeIndexRef }) {
 
   useFrame((state, delta) => {
     const targetZ = 5 - activeIndexRef.current * SPACING;
-    const ease = Math.min(1, delta * 4.2);
+    const ease = Math.min(1, delta * 11);
     cameraZRef.current += (targetZ - cameraZRef.current) * ease;
     state.camera.position.z = cameraZRef.current;
     state.camera.lookAt(0, 0, state.camera.position.z - SPACING * 0.5);
