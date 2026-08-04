@@ -153,11 +153,6 @@ export default function ShelfScene({ activeIndex }) {
       <ambientLight intensity={1.1} color={0x404040} />
       <directionalLight position={[4, 6, 8]} intensity={1.2} />
       <directionalLight position={[-5, -2, -4]} intensity={0.5} color={0xfbbf24} />
-      {/* Fog matches the surface color so the grid's distant lines fade out
-          before their spacing collapses below a pixel and moirés into solid
-          bands — a plain GridHelper with no falloff did exactly that. */}
-      <fog attach="fog" args={[0x0a0a0a, 6, 26]} />
-      <gridHelper args={[60, 24, 0x222222, 0x161616]} position={[0, -2.4, 0]} />
       <Suspense fallback={null}>
         <Shelf activeIndexRef={activeIndexRef} />
       </Suspense>

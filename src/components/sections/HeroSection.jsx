@@ -84,7 +84,7 @@ export default function HeroSection() {
           the glow at the top of AboutSection. */}
       <div
         aria-hidden="true"
-        className="pointer-events-none absolute inset-x-0 bottom-0 z-[5] h-[30vh] bg-gradient-to-b from-transparent to-[#0a0a0a]"
+        className="pointer-events-none absolute inset-x-0 bottom-0 z-[5] h-[14vh] bg-gradient-to-b from-transparent to-[#0a0a0a]"
       />
 
       {useStaticFallback ? (

@@ -49,8 +49,8 @@ export default function SectionMenu({ align = "start" }) {
             <DistortText
               as="span"
               text={link.label.toUpperCase()}
-              className={`${LINK_CLASS} ${isActive ? "text-white" : "text-white/70"}`}
-              color={isActive ? "#ffffff" : "rgba(255,255,255,0.7)"}
+              className={`${LINK_CLASS} ${isActive ? "text-white" : "text-white/90"}`}
+              color={isActive ? "#ffffff" : "rgba(255,255,255,0.9)"}
               fontWeight={700}
               strength={0.4}
               rgbShiftMax={0.005}
