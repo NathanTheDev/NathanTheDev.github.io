@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { getProjectBySlug } from "../../data/projects";
 import Badge from "../../components/ui/Badge";
@@ -21,6 +22,14 @@ export const Route = createFileRoute("/projects/$slug")({
 function ProjectDetail() {
   const { slug } = Route.useParams();
   const project = getProjectBySlug(slug);
+
+  // Landing here from the projects shelf/filmstrip leaves body scroll
+  // wherever the homepage was (deep into the Projects section) — this is a
+  // separate route/page, so it should always open at its own top rather than
+  // inheriting that position. "instant" avoids a visible scroll-down glide.
+  useEffect(() => {
+    document.body.scrollTo({ top: 0, behavior: "instant" });
+  }, [slug]);
 
   if (!project) {
     return (
