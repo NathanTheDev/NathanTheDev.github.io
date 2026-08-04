@@ -32,7 +32,14 @@ export default function AboutSection() {
       id="about"
       className="relative flex min-h-dvh w-full flex-col items-center justify-center bg-surface px-6 py-20 text-white sm:py-24 md:py-32"
     >
-      <div className="grid w-full max-w-5xl items-center gap-10 lg:grid-cols-[1.1fr_0.9fr] lg:gap-16 xl:max-w-6xl">
+      {/* Echoes the light Hero fades out of just above — keeps the seam a
+          bleed instead of a cut. */}
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute inset-x-0 top-0 h-[40vh] bg-gradient-to-b from-white/[0.08] to-transparent"
+      />
+
+      <div className="relative grid w-full max-w-5xl items-center gap-10 lg:grid-cols-[1.1fr_0.9fr] lg:gap-16 xl:max-w-6xl">
         <div className="flex flex-col items-center gap-6 text-center lg:items-start lg:text-left">
           <Reveal as="p" className="text-xs tracking-[0.3em] text-white/40 uppercase">
             About
@@ -61,7 +68,7 @@ export default function AboutSection() {
         </div>
 
         <Reveal as="div" direction="right" delay={0.15} className="hidden lg:block">
-          <AboutCubeMotif className="h-72 w-full xl:h-80" />
+          <AboutCubeMotif className="h-80 w-full xl:h-96" size={300} />
         </Reveal>
       </div>
     </section>

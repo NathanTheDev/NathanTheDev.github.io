@@ -4,6 +4,7 @@ import { motion } from "framer-motion";
 import ShelfScene from "../three/ShelfScene";
 import DistortText from "../three/DistortText";
 import DistortImage from "../three/DistortImage";
+import StaticCubeX from "../three/StaticCubeX";
 import Badge from "../ui/Badge";
 import { ActiveRevealGroup, RevealItem } from "../motion/Reveal";
 import { projects } from "../../data/projects";
@@ -72,6 +73,11 @@ function ShelfGallery() {
   return (
     <section id="projects" className="relative h-dvh w-full overflow-hidden bg-surface">
       <div className="pointer-events-none absolute inset-x-0 top-8 z-10 flex flex-col items-center gap-1 text-center sm:top-16 sm:gap-2">
+        {/* Same "X" motif that opens Hero and bookends Contact — without it,
+            Projects reads as a different site pasted into the scroll. */}
+        <div className="mb-1 opacity-30">
+          <StaticCubeX size={40} />
+        </div>
         <p className="text-xs tracking-[0.3em] text-white/40 uppercase">Projects</p>
         <DistortText
           text="Selected work"
@@ -147,6 +153,11 @@ function FilmstripGallery() {
   return (
     <section id="projects" className="relative h-dvh w-full overflow-hidden bg-surface">
       <div className="pointer-events-none absolute inset-x-0 top-8 z-10 flex flex-col items-center gap-1 text-center sm:top-16 sm:gap-2">
+        {/* Same "X" motif that opens Hero and bookends Contact — without it,
+            Projects reads as a different site pasted into the scroll. */}
+        <div className="mb-1 opacity-30">
+          <StaticCubeX size={40} />
+        </div>
         <p className="text-xs tracking-[0.3em] text-white/40 uppercase">Projects</p>
         <DistortText
           text="Selected work"

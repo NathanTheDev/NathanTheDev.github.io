@@ -79,6 +79,13 @@ export default function HeroSection() {
   return (
     <section id="home" className="relative flex h-dvh w-full flex-col overflow-hidden">
       <div className={`absolute inset-0 ${useStaticFallback ? "hero-vignette-dim" : "hero-vignette"}`} />
+      {/* Hero's vignette is bright, every other section is near-black — this
+          pre-fades the seam so About doesn't open on a hard cut. Paired with
+          the glow at the top of AboutSection. */}
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute inset-x-0 bottom-0 z-[5] h-[30vh] bg-gradient-to-b from-transparent to-[#0a0a0a]"
+      />
 
       {useStaticFallback ? (
         // Own self-contained flex layout (not the absolute-positioned nav
