@@ -81,7 +81,7 @@ function ProjectDetail() {
             ))}
           </RevealItem>
 
-          <RevealItem as="p" className="leading-relaxed text-white/70">
+          <RevealItem as="p" className="dither-text leading-relaxed text-white/70">
             {project.longDescription ?? project.description}
           </RevealItem>
 
@@ -90,7 +90,7 @@ function ProjectDetail() {
               {project.highlights.map((highlight) => (
                 <li key={highlight} className="flex gap-3 leading-relaxed text-white/70">
                   <span aria-hidden="true" className="mt-2.5 h-1 w-1 shrink-0 rounded-full bg-white/40" />
-                  {highlight}
+                  <span className="dither-text">{highlight}</span>
                 </li>
               ))}
             </RevealItem>

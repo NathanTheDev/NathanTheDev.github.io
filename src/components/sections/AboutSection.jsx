@@ -50,7 +50,7 @@ export default function AboutSection() {
             className="font-display text-4xl font-semibold md:text-5xl xl:text-6xl"
           />
 
-          <Reveal as="p" delay={0.1} className="text-lg text-white/60 leading-relaxed xl:text-xl">
+          <Reveal as="p" delay={0.1} className="dither-text text-lg text-white/60 leading-relaxed xl:text-xl">
             A recent graduate from UNSW with a bachelor’s in computer science and economics,
             a software engineer passionate about building reliable, maintainable, and
             well documented software. I specialize in full stack development and have

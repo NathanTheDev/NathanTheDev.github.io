@@ -107,8 +107,8 @@ export default function ContactSection() {
                 className="w-full"
               >
                 <span className="flex flex-col items-center overflow-hidden">
-                  <span className="text-sm font-medium text-white">{link.label}</span>
-                  <span className="truncate text-xs text-white/50">{link.sub}</span>
+                  <span className="dither-text text-sm font-medium text-white">{link.label}</span>
+                  <span className="dither-text truncate text-xs text-white/50">{link.sub}</span>
                 </span>
               </Button>
             </MagneticTile>

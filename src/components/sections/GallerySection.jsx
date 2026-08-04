@@ -112,7 +112,7 @@ function ShelfGallery() {
           <h3 className="font-display mt-1 text-2xl font-semibold text-white sm:text-3xl md:text-4xl">
             {active.title}
           </h3>
-          <p className="mt-2 line-clamp-2 text-sm text-white/60 sm:text-base">{active.description}</p>
+          <p className="dither-text mt-2 line-clamp-2 text-sm text-white/60 sm:text-base">{active.description}</p>
           <div className="mt-3 flex flex-wrap justify-center gap-1.5 sm:justify-start">
             {active.tags.map((tag) => (
               <Badge key={tag} size="sm">
@@ -205,7 +205,7 @@ function FilmstripGallery() {
             </RevealItem>
             <RevealItem
               as="p"
-              className="line-clamp-2 max-w-lg text-sm text-white/60 sm:line-clamp-3 sm:text-base xl:max-w-xl xl:text-lg"
+              className="dither-text line-clamp-2 max-w-lg text-sm text-white/60 sm:line-clamp-3 sm:text-base xl:max-w-xl xl:text-lg"
             >
               {project.description}
             </RevealItem>

@@ -83,3 +83,21 @@ html {
   display: none;
 }
 
+/* Dithers plain DOM text (the WebGL dithering in distortMaterial/CubeCluster
+   only reaches canvas-rendered text and 3D meshes) — clips the same 4x4
+   Bayer tile used everywhere else to the glyph shapes via background-clip,
+   using currentColor as the base so it still honors each element's own
+   color/opacity instead of flattening everything to one shade. Was a
+   fixed full-viewport overlay instead; that dithered the backgrounds too,
+   which wasn't the intent — this keeps it scoped to text only. */
+.dither-text {
+  background-color: currentColor;
+  background-image: url("/dither-tile.svg");
+  background-size: 16px 16px;
+  background-repeat: repeat;
+  background-blend-mode: overlay;
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
