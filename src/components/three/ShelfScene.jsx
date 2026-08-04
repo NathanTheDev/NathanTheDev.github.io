@@ -1,7 +1,10 @@
 import { Suspense, useEffect, useMemo, useRef } from "react";
 import { Canvas, useFrame } from "@react-three/fiber";
 import { useTexture } from "@react-three/drei";
+import { useNavigate } from "@tanstack/react-router";
 import * as THREE from "three";
+import DistortedPlane from "./DistortedPlane";
+import { useRaycastPointerUniform } from "../../hooks/useRaycastPointerUniform";
 import { projects } from "../../data/projects";
 
 // Cards recede into depth along -z, alternating x offset and y rotation like
@@ -13,78 +16,99 @@ const CARD_WIDTH = 3.4;
 const CARD_HEIGHT = 2.1;
 const CARD_ASPECT = CARD_WIDTH / CARD_HEIGHT;
 
-// object-fit: cover equivalent for a THREE.Texture — crops the wider axis so
-// project screenshots of any aspect ratio fill the card face without
-// stretching.
-function applyCoverUV(texture) {
+// object-fit: cover equivalent for a texture of arbitrary aspect ratio —
+// crops the wider axis instead of stretching. distortMaterial's shader reads
+// these as plain uniforms (uUvRepeat/uUvOffset), not THREE's built-in
+// texture.repeat/offset transform, since it samples the texture directly.
+function computeCoverUV(texture) {
   const img = texture.image;
-  if (!img) return;
-  // useTexture doesn't tag loaded textures as sRGB color data, so an unlit
-  // material (frontMaterial below) samples them as if linear and renders
-  // washed out — this is what actually corrects it, not tonemapping.
+  // useTexture doesn't tag loaded textures as sRGB color data, and this
+  // custom shader doesn't get the automatic decode built-in materials get —
+  // without this the images render visibly washed out.
   texture.colorSpace = THREE.SRGBColorSpace;
+  if (!img) return { repeat: [1, 1], offset: [0, 0] };
   const imgAspect = img.width / img.height;
   if (imgAspect > CARD_ASPECT) {
     const scale = CARD_ASPECT / imgAspect;
-    texture.repeat.set(scale, 1);
-    texture.offset.set((1 - scale) / 2, 0);
-  } else {
-    const scale = imgAspect / CARD_ASPECT;
-    texture.repeat.set(1, scale);
-    texture.offset.set(0, (1 - scale) / 2);
+    return { repeat: [scale, 1], offset: [(1 - scale) / 2, 0] };
   }
-  texture.needsUpdate = true;
+  const scale = imgAspect / CARD_ASPECT;
+  return { repeat: [1, scale], offset: [0, (1 - scale) / 2] };
 }
 
-function Card({ position, rotationY, texture, groupRef, onMaterials }) {
+// The clickable, hover-distorting image plane sitting just in front of the
+// card's box (see Card below). Reuses the same distortMaterial-driven liquid
+// warp as the rest of the site's images/text — this is what the old 2D
+// filmstrip's DistortImage cards had before the 3D shelf replaced them, and
+// what "bring the hover effect back" means here.
+function CardImage({ texture, slug }) {
+  const meshRef = useRef();
+  const navigate = useNavigate();
+  const pointer = useRaycastPointerUniform(meshRef);
+  const uv = useMemo(() => computeCoverUV(texture), [texture]);
+
+  function handleClick(event) {
+    event.stopPropagation();
+    navigate({ to: "/projects/$slug", params: { slug } });
+  }
+
+  function handlePointerOver(event) {
+    event.stopPropagation();
+    document.body.style.cursor = "pointer";
+  }
+
+  function handlePointerOut() {
+    document.body.style.cursor = "auto";
+  }
+
+  return (
+    <DistortedPlane
+      meshRef={meshRef}
+      texture={texture}
+      aspect={CARD_ASPECT}
+      width={CARD_WIDTH}
+      position={[0, 0, 0.065]}
+      pointer={pointer}
+      strength={0.4}
+      rgbShiftMax={0.008}
+      falloffRadius={0.4}
+      uvRepeat={uv.repeat}
+      uvOffset={uv.offset}
+      onClick={handleClick}
+      onPointerOver={handlePointerOver}
+      onPointerOut={handlePointerOut}
+    />
+  );
+}
+
+function Card({ position, rotationY, texture, slug, groupRef }) {
+  // Now just the dark bevel/frame behind CardImage — the image itself is a
+  // separate plane (see CardImage) so it can carry its own distortMaterial
+  // hover effect instead of a flat baked-in texture face.
   const geometry = useMemo(() => new THREE.BoxGeometry(CARD_WIDTH, CARD_HEIGHT, 0.12), []);
   const edges = useMemo(() => new THREE.EdgesGeometry(geometry), [geometry]);
-  // Unlit on purpose: the key/rim lights are tuned for the dark bevel
-  // (sideMaterial) to give the cards depth. Letting them hit the image too
-  // blows out light-UI screenshots (e.g. Helm's white dashboard) instead of
-  // just reading the source colors.
-  const frontMaterial = useMemo(() => {
-    if (texture) applyCoverUV(texture);
-    const material = new THREE.MeshBasicMaterial({ map: texture ?? null, transparent: true });
-    // Read as a flat printed photo, not a lit/foggy scene object — the depth
-    // fog graying out unfocused cards is a nice recession cue on the dark
-    // bevel, but on the image itself it just looks like a dirty screen.
-    material.toneMapped = false;
-    material.fog = false;
-    return material;
-  }, [texture]);
-  const sideMaterial = useMemo(
-    () => new THREE.MeshStandardMaterial({ color: 0x141414, roughness: 0.85, metalness: 0.1, transparent: true }),
-    [],
-  );
-  const materials = useMemo(
-    () => [sideMaterial, sideMaterial, sideMaterial, sideMaterial, frontMaterial, sideMaterial],
-    [sideMaterial, frontMaterial],
-  );
-
-  useEffect(() => {
-    onMaterials({ front: frontMaterial, side: sideMaterial });
-  }, [frontMaterial, sideMaterial, onMaterials]);
 
   return (
     <group ref={groupRef} position={position} rotation={[0, rotationY, 0]}>
-      <mesh geometry={geometry} material={materials} />
+      <mesh geometry={geometry}>
+        <meshStandardMaterial color={0x141414} roughness={0.85} metalness={0.1} />
+      </mesh>
       <lineSegments geometry={edges}>
         <lineBasicMaterial color={0xffffff} transparent opacity={0.25} />
       </lineSegments>
+      <CardImage texture={texture} slug={slug} />
     </group>
   );
 }
 
-// Owns both the scroll-driven camera dolly and the per-card focus falloff in
-// a single useFrame so the two stay in sync without relying on React render
-// or cross-component useFrame ordering. activeIndexRef is a ref (not state)
-// so scroll updates don't re-render the r3f tree — only the animation loop
-// reads it, every frame.
+// Owns the scroll-driven camera dolly and the per-card focus falloff (scale
+// only — opacity used to fade unfocused cards too, but that read as the
+// images going transparent, so focus is now a size cue alone). activeIndexRef
+// is a ref (not state) so scroll updates don't re-render the r3f tree — only
+// the animation loop reads it, every frame.
 function Shelf({ activeIndexRef }) {
   const textures = useTexture(projects.map((p) => p.image));
   const groupRefs = useRef([]);
-  const materialRefs = useRef([]);
   const cameraZRef = useRef(5);
 
   const cards = useMemo(
@@ -106,15 +130,11 @@ function Shelf({ activeIndexRef }) {
 
     cards.forEach((card, i) => {
       const group = groupRefs.current[i];
-      const mats = materialRefs.current[i];
-      if (!group || !mats) return;
+      if (!group) return;
       const dist = Math.abs(card.position[2] - (state.camera.position.z - SPACING * 0.5));
       const focus = Math.max(0, 1 - dist / (SPACING * 1.4));
       const scale = 0.85 + focus * 0.15;
       group.scale.set(scale, scale, 1);
-      const opacity = 0.32 + focus * 0.68;
-      mats.front.opacity = opacity;
-      mats.side.opacity = opacity;
     });
   });
 
@@ -124,11 +144,9 @@ function Shelf({ activeIndexRef }) {
       position={card.position}
       rotationY={card.rotationY}
       texture={textures[i]}
+      slug={card.slug}
       groupRef={(el) => {
         groupRefs.current[i] = el;
-      }}
-      onMaterials={(mats) => {
-        materialRefs.current[i] = mats;
       }}
     />
   ));

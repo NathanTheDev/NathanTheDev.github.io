@@ -53,7 +53,7 @@ function ProjectDots({ activeIndex }) {
           animate={{
             width: i === activeIndex ? 18 : 6,
             height: 6,
-            backgroundColor: i === activeIndex ? "#fbbf24" : "rgba(255,255,255,0.25)",
+            backgroundColor: i === activeIndex ? "#ffffff" : "rgba(255,255,255,0.25)",
           }}
           transition={{ type: "spring", stiffness: 600, damping: 32 }}
         />
@@ -88,14 +88,16 @@ function ShelfGallery() {
       <ShelfScene activeIndex={activeIndex} />
 
       {/* Invisible scroll proxy: purely a geometry source for useSectionSnapScroll's
-          offsetLeft math and a catch-all for native horizontal gestures (trackpad
-          shift-scroll, edge cases the wheel handler's deltaY-only check misses) —
-          see that hook's comments. All visible content lives in ShelfScene/HUD. */}
+          offsetLeft math — see that hook's comments. pointer-events-none so it
+          doesn't sit on top of ShelfScene's canvas and swallow clicks/hover
+          meant for the card images; the wheel handler that drives it lives on
+          document.body and doesn't need this element to receive events itself.
+          All visible content lives in ShelfScene/HUD. */}
       <div
         id="projects-track"
         ref={trackRef}
         aria-hidden="true"
-        className="no-scrollbar absolute inset-0 flex h-full w-full snap-x snap-mandatory overflow-x-auto opacity-0"
+        className="no-scrollbar pointer-events-none absolute inset-0 flex h-full w-full snap-x snap-mandatory overflow-x-auto opacity-0"
       >
         {projects.map((project) => (
           <div key={project.slug} data-project-card className="h-full w-full shrink-0 snap-start" />

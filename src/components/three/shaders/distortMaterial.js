@@ -25,11 +25,17 @@ const fragmentShader = /* glsl */ `
   uniform float uDitherStrength;
   uniform float uDitherLevels;
   uniform float uDitherPixelSize;
+  uniform vec2 uUvRepeat;
+  uniform vec2 uUvOffset;
   varying vec2 vUv;
 
   ${DITHER_GLSL}
 
   void main() {
+    // Distortion math stays in the plane's raw 0..1 UV space (same space as
+    // uMouse, which comes from raycasting against the plane geometry) — only
+    // the final texture lookups below get remapped into a cropped sub-rect,
+    // so a "cover"-fit crop doesn't throw off where the ripple centers.
     vec2 uv = vUv;
     vec2 diff = (uv - uMouse) * uAspect;
     float dist = length(diff);
@@ -57,9 +63,9 @@ const fragmentShader = /* glsl */ `
     float shift = uRgbShiftMax * amount * (0.5 + 0.7 * ring);
     vec2 shiftDir = dist > 0.0001 ? dir : vec2(1.0, 0.0);
 
-    vec4 sampR = texture2D(uTexture, uv + displacement + shiftDir * shift);
-    vec4 sampG = texture2D(uTexture, uv + displacement);
-    vec4 sampB = texture2D(uTexture, uv + displacement - shiftDir * shift);
+    vec4 sampR = texture2D(uTexture, (uv + displacement + shiftDir * shift) * uUvRepeat + uUvOffset);
+    vec4 sampG = texture2D(uTexture, (uv + displacement) * uUvRepeat + uUvOffset);
+    vec4 sampB = texture2D(uTexture, (uv + displacement - shiftDir * shift) * uUvRepeat + uUvOffset);
 
     // Alpha-mask content (e.g. black text on a transparent canvas texture)
     // carries no per-channel color to split, so the fringe is built from the
@@ -96,6 +102,8 @@ export const DistortMaterial = shaderMaterial(
     uDitherStrength: 0.3,
     uDitherLevels: 12,
     uDitherPixelSize: 4,
+    uUvRepeat: new THREE.Vector2(1, 1),
+    uUvOffset: new THREE.Vector2(0, 0),
   },
   vertexShader,
   fragmentShader,

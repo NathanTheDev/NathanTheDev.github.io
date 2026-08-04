@@ -20,6 +20,8 @@ export default function DistortedPlane({
   useAlphaChannel = false,
   doubleSided = false,
   alwaysOnTop = false,
+  uvRepeat = [1, 1],
+  uvOffset = [0, 0],
   pointer,
   meshRef,
   ...meshProps
@@ -64,6 +66,8 @@ export default function DistortedPlane({
         uDitherStrength={ditherStrength}
         uDitherLevels={ditherLevels}
         uDitherPixelSize={ditherPixelSize}
+        uUvRepeat={uvRepeat}
+        uUvOffset={uvOffset}
         side={doubleSided ? THREE.DoubleSide : THREE.FrontSide}
         depthTest={!alwaysOnTop}
         transparent
