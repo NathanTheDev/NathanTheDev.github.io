@@ -123,7 +123,7 @@ function ShelfGallery() {
           <Link
             to="/projects/$slug"
             params={{ slug: active.slug }}
-            className="group font-display pointer-events-auto -my-2.5 mt-4 inline-flex items-center gap-2 py-2.5 text-base text-white/80 underline underline-offset-4 transition-colors hover:text-white"
+            className="group font-display pointer-events-auto mt-4 inline-flex items-center gap-2 text-base text-white/80 underline underline-offset-4 transition-colors hover:text-white"
           >
             View project
             <span aria-hidden="true" className="transition-transform group-hover:translate-x-1">
