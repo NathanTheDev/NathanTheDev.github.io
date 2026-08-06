@@ -9,6 +9,12 @@ const SECTION_ANIMATION_MS = 450;
 // than native scrollIntoView smooth-scroll, whose duration the browser
 // controls.
 const PROJECT_ANIMATION_MS = 260;
+// Trackpads (and momentum/inertial scrolling generally) fire a long stream
+// of many small-delta wheel events per physical swipe, not one — often
+// lasting well past a single section/project's animation duration. This is
+// how long a gap between wheel events has to be before we consider the
+// physical gesture actually over; see armUnlock below.
+const WHEEL_QUIET_MS = 180;
 
 function animateScrollLeft(el, target, duration) {
   const start = el.scrollLeft;
@@ -62,8 +68,18 @@ export function useSectionSnapScroll() {
   useEffect(() => {
     if (reducedMotion) return undefined;
 
-    function unlockAfter(ms) {
-      window.setTimeout(() => {
+    let unlockTimer;
+
+    // A fixed-duration lock that starts counting the moment the first event
+    // in a trackpad's wheel-event stream arrives expires mid-stream, so
+    // later events from the SAME physical swipe get treated as fresh
+    // gestures and keep advancing — one swipe could blow through every
+    // section or project. Every wheel event received while locked pushes
+    // the unlock back out instead, so the lock only actually releases once
+    // the stream of events genuinely goes quiet (the gesture has ended).
+    function armUnlock(ms) {
+      window.clearTimeout(unlockTimer);
+      unlockTimer = window.setTimeout(() => {
         lockedRef.current = false;
       }, ms);
     }
@@ -71,6 +87,7 @@ export function useSectionSnapScroll() {
     function handleWheel(event) {
       if (lockedRef.current) {
         event.preventDefault();
+        armUnlock(WHEEL_QUIET_MS);
         return;
       }
 
@@ -89,7 +106,7 @@ export function useSectionSnapScroll() {
           event.preventDefault();
           lockedRef.current = true;
           animateScrollLeft(track, cards[nextProjectIndex].offsetLeft, PROJECT_ANIMATION_MS);
-          unlockAfter(PROJECT_ANIMATION_MS);
+          armUnlock(Math.max(PROJECT_ANIMATION_MS, WHEEL_QUIET_MS));
           return;
         }
       }
@@ -117,10 +134,13 @@ export function useSectionSnapScroll() {
         }
       }
 
-      unlockAfter(SECTION_ANIMATION_MS);
+      armUnlock(Math.max(SECTION_ANIMATION_MS, WHEEL_QUIET_MS));
     }
 
     document.body.addEventListener("wheel", handleWheel, { passive: false });
-    return () => document.body.removeEventListener("wheel", handleWheel);
+    return () => {
+      document.body.removeEventListener("wheel", handleWheel);
+      window.clearTimeout(unlockTimer);
+    };
   }, [reducedMotion]);
 }
