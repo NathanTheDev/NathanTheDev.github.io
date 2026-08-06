@@ -106,9 +106,16 @@ export default function ContactSection() {
                 iconClassName="h-6 w-6 shrink-0 text-white/80"
                 className="w-full"
               >
-                <span className="flex flex-col items-center overflow-hidden">
-                  <span className="dither-text text-sm font-medium text-white">{link.label}</span>
-                  <span className="dither-text truncate text-xs text-white/50">{link.sub}</span>
+                {/* w-full at every level, not just the outer wrapper — with
+                    items-center on the ancestor Button/wrapper flex-cols,
+                    each span otherwise shrinks-to-fit its own content width
+                    instead of the tile's, so truncate below has no bounded
+                    box to actually clip against (it just renders the email
+                    at full width and lets overflow-x:hidden silently cut it
+                    off illegibly rather than ellipsizing it). */}
+                <span className="flex w-full flex-col items-center overflow-hidden">
+                  <span className="dither-text w-full truncate text-sm font-medium text-white">{link.label}</span>
+                  <span className="dither-text w-full truncate text-xs text-white/50">{link.sub}</span>
                 </span>
               </Button>
             </MagneticTile>
