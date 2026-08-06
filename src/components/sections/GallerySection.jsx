@@ -178,7 +178,7 @@ function FilmstripGallery() {
             as="div"
             data-project-card
             active={activeIndex === index}
-            className="flex h-full w-full shrink-0 snap-start flex-col items-center justify-center gap-4 px-6 py-16 text-center sm:gap-4 sm:py-20 md:gap-6"
+            className="flex h-full w-full shrink-0 snap-start snap-always flex-col items-center justify-center gap-4 px-6 py-16 text-center sm:gap-4 sm:py-20 md:gap-6"
           >
             <RevealItem as="div" variant="scale">
               <Link to="/projects/$slug" params={{ slug: project.slug }} className="relative inline-block">
