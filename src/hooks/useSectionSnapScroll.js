@@ -14,7 +14,19 @@ const PROJECT_ANIMATION_MS = 260;
 // lasting well past a single section/project's animation duration. This is
 // how long a gap between wheel events has to be before we consider the
 // physical gesture actually over; see armUnlock below.
-const WHEEL_QUIET_MS = 180;
+const WHEEL_QUIET_MS = 120;
+// Ceiling on how long one physical gesture can hold the lock open — a
+// defensive backstop, not the primary mechanism (see MIN_MEANINGFUL_DELTA
+// below), for input devices that never taper off.
+const MAX_GESTURE_LOCK_MS = 500;
+// A trackpad's momentum tail decays from real, page-worthy deltas down to
+// near-zero residual events before it actually stops. Below this magnitude
+// a wheel event is noise, not gesture activity: it shouldn't extend the
+// lock (or the site stays "stuck" for the whole slow decay, not just the
+// real swipe) and it shouldn't be treated as a brand-new gesture either
+// (or the very next dribble event right after unlock re-triggers another
+// advance). Only "real" deltas count in either direction.
+const MIN_MEANINGFUL_DELTA = 4;
 
 function animateScrollLeft(el, target, duration) {
   const start = el.scrollLeft;
@@ -69,6 +81,7 @@ export function useSectionSnapScroll() {
     if (reducedMotion) return undefined;
 
     let unlockTimer;
+    let gestureStartedAt = 0;
 
     // A fixed-duration lock that starts counting the moment the first event
     // in a trackpad's wheel-event stream arrives expires mid-stream, so
@@ -76,18 +89,35 @@ export function useSectionSnapScroll() {
     // gestures and keep advancing — one swipe could blow through every
     // section or project. Every wheel event received while locked pushes
     // the unlock back out instead, so the lock only actually releases once
-    // the stream of events genuinely goes quiet (the gesture has ended).
+    // the stream of events genuinely goes quiet (the gesture has ended) —
+    // but never later than MAX_GESTURE_LOCK_MS after the gesture started,
+    // so a slow-decaying momentum tail can't hold the lock open forever.
     function armUnlock(ms) {
       window.clearTimeout(unlockTimer);
+      const remaining = MAX_GESTURE_LOCK_MS - (Date.now() - gestureStartedAt);
       unlockTimer = window.setTimeout(() => {
         lockedRef.current = false;
-      }, ms);
+      }, Math.max(0, Math.min(ms, remaining)));
     }
 
     function handleWheel(event) {
+      const meaningful = Math.abs(event.deltaY) >= MIN_MEANINGFUL_DELTA;
+
       if (lockedRef.current) {
         event.preventDefault();
-        armUnlock(WHEEL_QUIET_MS);
+        // Only real deltas keep the lock open — a dribble of near-zero
+        // residual events doesn't extend it, so the lock still releases
+        // shortly after the actual swipe ends rather than however long the
+        // decay happens to trail on for.
+        if (meaningful) armUnlock(WHEEL_QUIET_MS);
+        return;
+      }
+
+      if (!meaningful) {
+        // Swallow stray residual events instead of letting native scroll
+        // act on them (they'd otherwise nudge document.body a few px) —
+        // but don't treat them as a new gesture.
+        event.preventDefault();
         return;
       }
 
@@ -105,6 +135,7 @@ export function useSectionSnapScroll() {
         if (nextProjectIndex >= 0 && nextProjectIndex < cards.length) {
           event.preventDefault();
           lockedRef.current = true;
+          gestureStartedAt = Date.now();
           animateScrollLeft(track, cards[nextProjectIndex].offsetLeft, PROJECT_ANIMATION_MS);
           armUnlock(Math.max(PROJECT_ANIMATION_MS, WHEEL_QUIET_MS));
           return;
@@ -116,6 +147,7 @@ export function useSectionSnapScroll() {
 
       event.preventDefault();
       lockedRef.current = true;
+      gestureStartedAt = Date.now();
       document.getElementById(SECTION_IDS[nextSectionIndex]).scrollIntoView({ behavior: "smooth", block: "start" });
 
       if (nextSectionIndex === PROJECTS_INDEX) {
