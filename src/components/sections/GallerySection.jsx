@@ -26,18 +26,61 @@ function useActiveProjectIndex() {
     const track = trackRef.current;
     if (!track) return undefined;
 
-    function handleScroll() {
-      const cards = Array.from(track.querySelectorAll("[data-project-card]"));
-      const scrollLeft = track.scrollLeft;
-      let idx = 0;
-      cards.forEach((card, i) => {
-        if (card.offsetLeft - 10 <= scrollLeft) idx = i;
-      });
-      setActiveIndex(idx);
+    function getCards() {
+      return Array.from(track.querySelectorAll("[data-project-card]"));
     }
 
+    function indexAtScrollLeft(scrollLeft) {
+      let idx = 0;
+      getCards().forEach((card, i) => {
+        if (card.offsetLeft - 10 <= scrollLeft) idx = i;
+      });
+      return idx;
+    }
+
+    // scroll-snap-stop: always (on the cards) is supposed to stop native
+    // touch-fling scrolling at every snap point, but real Android Chrome has
+    // been observed ignoring that and still carrying a single fast swipe
+    // clean through every card. This is the JS backstop: remember which
+    // card the gesture started on, and once scrolling actually goes quiet
+    // (debounced — momentum fires many scroll events while decelerating),
+    // clamp the result back to at most one card past the start, regardless
+    // of how far the native fling carried it.
+    let gestureStartIndex = null;
+    let settleTimer;
+
+    function handleTouchStart() {
+      gestureStartIndex = indexAtScrollLeft(track.scrollLeft);
+    }
+
+    function handleScroll() {
+      setActiveIndex(indexAtScrollLeft(track.scrollLeft));
+
+      window.clearTimeout(settleTimer);
+      settleTimer = window.setTimeout(() => {
+        if (gestureStartIndex == null) return;
+        const startIndex = gestureStartIndex;
+        gestureStartIndex = null;
+
+        const settledIndex = indexAtScrollLeft(track.scrollLeft);
+        const direction = settledIndex > startIndex ? 1 : settledIndex < startIndex ? -1 : 0;
+        if (direction === 0 || Math.abs(settledIndex - startIndex) <= 1) return;
+
+        const target = getCards()[startIndex + direction];
+        if (target) {
+          track.scrollTo({ left: target.offsetLeft, behavior: "instant" });
+          setActiveIndex(startIndex + direction);
+        }
+      }, 120);
+    }
+
+    track.addEventListener("touchstart", handleTouchStart, { passive: true });
     track.addEventListener("scroll", handleScroll, { passive: true });
-    return () => track.removeEventListener("scroll", handleScroll);
+    return () => {
+      track.removeEventListener("touchstart", handleTouchStart);
+      track.removeEventListener("scroll", handleScroll);
+      window.clearTimeout(settleTimer);
+    };
   }, []);
 
   return { trackRef, activeIndex };
