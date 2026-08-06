@@ -41,6 +41,13 @@ export default function AboutSection() {
 
       <div className="relative grid w-full max-w-5xl items-center gap-10 lg:grid-cols-[1.1fr_0.9fr] lg:gap-16 xl:max-w-6xl">
         <div className="flex flex-col items-center gap-6 text-center lg:items-start lg:text-left">
+          {/* Same motif as the lg:block one further down, just smaller and
+              stacked above the copy instead of beside it — below lg there's
+              no side column to put it in, but it shouldn't just vanish. */}
+          <Reveal as="div" className="lg:hidden">
+            <AboutCubeMotif className="h-32 w-32 sm:h-40 sm:w-40" size={160} />
+          </Reveal>
+
           <Reveal as="p" className="text-xs tracking-[0.3em] text-white/40 uppercase">
             About
           </Reveal>
@@ -50,7 +57,11 @@ export default function AboutSection() {
             className="font-display text-4xl font-semibold md:text-5xl xl:text-6xl"
           />
 
-          <Reveal as="p" delay={0.1} className="dither-text text-lg text-white/60 leading-relaxed xl:text-xl">
+          <Reveal
+            as="p"
+            delay={0.1}
+            className="dither-text max-w-md text-left text-lg text-white/60 leading-relaxed sm:max-w-lg lg:max-w-none xl:text-xl"
+          >
             A recent graduate from UNSW with a bachelor’s in computer science and economics,
             a software engineer passionate about building reliable, maintainable, and
             well documented software. I specialize in full stack development and have

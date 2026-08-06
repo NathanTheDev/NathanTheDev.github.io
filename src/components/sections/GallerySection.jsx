@@ -123,7 +123,7 @@ function ShelfGallery() {
           <Link
             to="/projects/$slug"
             params={{ slug: active.slug }}
-            className="group font-display pointer-events-auto mt-4 inline-flex items-center gap-2 text-base text-white/80 underline underline-offset-4 transition-colors hover:text-white"
+            className="group font-display pointer-events-auto -my-2.5 mt-4 inline-flex items-center gap-2 py-2.5 text-base text-white/80 underline underline-offset-4 transition-colors hover:text-white"
           >
             View project
             <span aria-hidden="true" className="transition-transform group-hover:translate-x-1">
@@ -178,7 +178,7 @@ function FilmstripGallery() {
             as="div"
             data-project-card
             active={activeIndex === index}
-            className="flex h-full w-full shrink-0 snap-start flex-col items-center justify-center gap-3 px-6 py-16 text-center sm:gap-4 sm:py-20 md:gap-6"
+            className="flex h-full w-full shrink-0 snap-start flex-col items-center justify-center gap-4 px-6 py-16 text-center sm:gap-4 sm:py-20 md:gap-6"
           >
             <RevealItem as="div" variant="scale">
               <Link to="/projects/$slug" params={{ slug: project.slug }} className="relative inline-block">
@@ -190,7 +190,7 @@ function FilmstripGallery() {
                 <DistortImage
                   src={project.image}
                   alt={project.title}
-                  className="h-28 w-auto max-w-md rounded-2xl object-cover shadow-2xl sm:h-44 md:h-72 xl:h-96"
+                  className="h-52 w-auto max-w-md rounded-2xl object-cover shadow-2xl sm:h-56 md:h-72 xl:h-96"
                 />
               </Link>
             </RevealItem>
@@ -199,7 +199,7 @@ function FilmstripGallery() {
                 <DistortText
                   as="h3"
                   text={project.title}
-                  className="font-display text-xl font-semibold text-white sm:text-3xl md:text-5xl xl:text-6xl"
+                  className="font-display text-2xl font-semibold text-white sm:text-3xl md:text-5xl xl:text-6xl"
                 />
               </Link>
             </RevealItem>
@@ -220,7 +220,7 @@ function FilmstripGallery() {
               <Link
                 to="/projects/$slug"
                 params={{ slug: project.slug }}
-                className="group font-display flex items-center gap-2 text-base text-white/80 underline underline-offset-4 transition-colors hover:text-white sm:text-lg md:text-xl"
+                className="group font-display -my-2.5 flex items-center gap-2 py-2.5 text-base text-white/80 underline underline-offset-4 transition-colors hover:text-white sm:text-lg md:text-xl"
               >
                 View project
                 <span aria-hidden="true" className="transition-transform group-hover:translate-x-1">

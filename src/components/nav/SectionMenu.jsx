@@ -45,7 +45,12 @@ export default function SectionMenu({ align = "start" }) {
       {LINKS.map((link) => {
         const isActive = activeId === link.href.slice(1);
         return (
-          <a key={link.href} href={link.href} onClick={(event) => handleClick(event, link.href)}>
+          <a
+            key={link.href}
+            href={link.href}
+            onClick={(event) => handleClick(event, link.href)}
+            className="-my-1.5 py-1.5"
+          >
             <DistortText
               as="span"
               text={link.label.toUpperCase()}
@@ -63,7 +68,7 @@ export default function SectionMenu({ align = "start" }) {
         href="https://github.com/NathanTheDev"
         target="_blank"
         rel="noopener noreferrer"
-        className="flex items-center gap-3"
+        className="-my-1.5 flex items-center gap-3 py-1.5"
       >
         <GitHubIcon className="h-8 w-8 text-white/70" />
         <DistortText
