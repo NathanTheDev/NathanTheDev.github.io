@@ -1,6 +1,7 @@
 import DistortText from "../three/DistortText";
 import StaticCubeX from "../three/StaticCubeX";
 import Button from "../ui/Button";
+import ContactTraceLines from "../ui/ContactTraceLines";
 import Reveal, { RevealGroup, RevealItem } from "../motion/Reveal";
 import MagneticTile from "../motion/MagneticTile";
 
@@ -76,6 +77,8 @@ export default function ContactSection() {
       id="contact"
       className="relative flex min-h-dvh w-full flex-col items-center justify-center bg-surface px-6 py-14 text-white sm:py-20 md:py-24"
     >
+      <ContactTraceLines />
+
       {/* Bookends the Hero's cube cluster — same "X" motif, much smaller and
           static, closing the page on the identity it opened with. */}
       <div className="mb-5 opacity-40 sm:mb-8">

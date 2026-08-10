@@ -6,6 +6,7 @@ import DistortText from "../three/DistortText";
 import DistortImage from "../three/DistortImage";
 import StaticCubeX from "../three/StaticCubeX";
 import Badge from "../ui/Badge";
+import GalleryTraceLines from "../ui/GalleryTraceLines";
 import { ActiveRevealGroup, RevealItem } from "../motion/Reveal";
 import { projects } from "../../data/projects";
 import { useDeviceCapability } from "../../hooks/useDeviceCapability";
@@ -115,6 +116,8 @@ function ShelfGallery() {
 
   return (
     <section id="projects" className="relative h-dvh w-full overflow-hidden bg-surface">
+      <GalleryTraceLines />
+
       <div className="pointer-events-none absolute inset-x-0 top-8 z-10 flex flex-col items-center gap-1 text-center sm:top-16 sm:gap-2">
         {/* Same "X" motif that opens Hero and bookends Contact — without it,
             Projects reads as a different site pasted into the scroll. */}
@@ -197,6 +200,8 @@ function FilmstripGallery() {
 
   return (
     <section id="projects" className="relative h-dvh w-full overflow-hidden bg-surface">
+      <GalleryTraceLines />
+
       <div className="pointer-events-none absolute inset-x-0 top-8 z-10 flex flex-col items-center gap-1 text-center sm:top-16 sm:gap-2">
         {/* Same "X" motif that opens Hero and bookends Contact — without it,
             Projects reads as a different site pasted into the scroll. */}
