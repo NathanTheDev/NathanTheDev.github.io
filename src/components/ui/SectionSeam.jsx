@@ -17,15 +17,15 @@ export default function SectionSeam({ className = "" }) {
 
       {/* Scanline texture on the black fill — same x positions (in this same
           1440-wide coordinate space) as TraceLines' continuation of them
-          down through AboutSection. Each kinks out and back to its start x
-          rather than drifting, so the handoff at the bottom edge still
-          lines up with where TraceLines picks it up. */}
-      <g stroke="#ffffff" strokeOpacity="0.2" strokeWidth="2" fill="none">
-        <path d="M400,84 L406,90 L400,96" />
-        <path d="M414,84 L409,88 L414,94" />
-        <path d="M428,84 L433,90 L428,97" />
-        <path d="M860,84 L855,89 L860,95" />
-        <path d="M874,84 L879,88 L874,93" />
+          down through AboutSection. Straight down to y=100 (the section's
+          bottom edge) so it touches TraceLines' y=0 start with no dead gap
+          — the diagonal jogs only start once TraceLines has room for them. */}
+      <g stroke="#ffffff" strokeOpacity="0.2" strokeWidth="2">
+        <line x1="400" y1="84" x2="400" y2="100" />
+        <line x1="414" y1="84" x2="414" y2="100" />
+        <line x1="428" y1="84" x2="428" y2="100" />
+        <line x1="860" y1="84" x2="860" y2="100" />
+        <line x1="874" y1="84" x2="874" y2="100" />
       </g>
 
       {/* Debris flecks breaking off a few of the spikes, sitting in the
