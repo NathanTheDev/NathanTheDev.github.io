@@ -1,6 +1,7 @@
 import DistortText from "../three/DistortText";
 import AboutCubeMotif from "../three/AboutCubeMotif";
 import Badge from "../ui/Badge";
+import ZigzagTrace from "../ui/ZigzagTrace";
 import Reveal, { RevealGroup, RevealItem } from "../motion/Reveal";
 
 const STACK = [
@@ -38,6 +39,7 @@ export default function AboutSection() {
         aria-hidden="true"
         className="pointer-events-none absolute inset-x-0 top-0 h-[40vh] bg-gradient-to-b from-white/[0.08] to-transparent"
       />
+      <ZigzagTrace />
 
       <div className="relative grid w-full max-w-5xl items-center gap-10 lg:grid-cols-[1.1fr_0.9fr] lg:gap-16 xl:max-w-6xl">
         <div className="flex flex-col items-center gap-6 text-center lg:items-start lg:text-left">

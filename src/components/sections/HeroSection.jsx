@@ -4,6 +4,7 @@ import CubeCluster from "../three/CubeCluster";
 import DistortedPlane from "../three/DistortedPlane";
 import StaticCubeX from "../three/StaticCubeX";
 import SectionMenu from "../nav/SectionMenu";
+import SectionSeam from "../ui/SectionSeam";
 import { useRaycastPointerUniform } from "../../hooks/useRaycastPointerUniform";
 import { useTextTexture } from "../../hooks/useTextTexture";
 import { usePrefersReducedMotion } from "../../hooks/usePrefersReducedMotion";
@@ -86,6 +87,7 @@ export default function HeroSection() {
         aria-hidden="true"
         className="pointer-events-none absolute inset-x-0 bottom-0 z-[5] h-[14vh] bg-gradient-to-b from-transparent to-[#0a0a0a]"
       />
+      <SectionSeam className="h-16 sm:h-24 md:h-28 lg:h-32" />
 
       {useStaticFallback ? (
         // Own self-contained flex layout (not the absolute-positioned nav
