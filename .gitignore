@@ -17,6 +17,9 @@ dist-ssr
 # Playwright MCP debug output
 .playwright-mcp/
 
+# Claude Code scratch space — codebase notes, not project output
+/tmp/
+
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json
