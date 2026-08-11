@@ -16,9 +16,7 @@ const SIZES = {
 export default function Badge({ children, variant = "tag", size = "md", className = "" }) {
   return (
     <span className={`inline-flex items-center rounded-full ${VARIANTS[variant]} ${SIZES[size]} ${className}`}>
-      {/* Separate inner span so the dither clip only touches the text fill,
-          not the pill's own bg-white/5 background. */}
-      <span className={variant === "tag" ? "dither-text" : ""}>{children}</span>
+      {children}
     </span>
   );
 }

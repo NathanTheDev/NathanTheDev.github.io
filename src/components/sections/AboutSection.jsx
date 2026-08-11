@@ -62,7 +62,7 @@ export default function AboutSection() {
           <Reveal
             as="p"
             delay={0.1}
-            className="dither-text max-w-md text-left text-lg text-white/60 leading-relaxed sm:max-w-lg lg:max-w-none xl:text-xl"
+            className="max-w-md text-left text-lg text-white/60 leading-relaxed sm:max-w-lg lg:max-w-none xl:text-xl"
           >
             A recent graduate from UNSW with a bachelor’s in computer science and economics,
             a software engineer passionate about building reliable, maintainable, and

@@ -117,8 +117,8 @@ export default function ContactSection() {
                     at full width and lets overflow-x:hidden silently cut it
                     off illegibly rather than ellipsizing it). */}
                 <span className="flex w-full flex-col items-center overflow-hidden">
-                  <span className="dither-text w-full truncate text-sm font-medium text-white">{link.label}</span>
-                  <span className="dither-text w-full truncate text-xs text-white/50">{link.sub}</span>
+                  <span className="w-full truncate text-sm font-medium text-white">{link.label}</span>
+                  <span className="w-full truncate text-xs text-white/50">{link.sub}</span>
                 </span>
               </Button>
             </MagneticTile>
