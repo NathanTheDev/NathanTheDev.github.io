@@ -19,13 +19,23 @@ export default function SectionSeam({ className = "" }) {
           1440-wide coordinate space) as TraceLines' continuation of them
           down through AboutSection. Straight down to y=100 (the section's
           bottom edge) so it touches TraceLines' y=0 start with no dead gap
-          — the diagonal jogs only start once TraceLines has room for them. */}
-      <g stroke="#ffffff" strokeOpacity="0.2" strokeWidth="2">
+          — the diagonal jogs only start once TraceLines has room for them.
+          Two variants, swapped by breakpoint rather than media-queried
+          coordinates, because the x positions themselves differ (see the
+          mobile-spacing comment in TraceLines) — not just their styling. */}
+      <g stroke="#ffffff" strokeOpacity="0.2" strokeWidth="2" className="hidden sm:block">
         <line x1="400" y1="84" x2="400" y2="100" />
         <line x1="414" y1="84" x2="414" y2="100" />
         <line x1="428" y1="84" x2="428" y2="100" />
         <line x1="860" y1="84" x2="860" y2="100" />
         <line x1="874" y1="84" x2="874" y2="100" />
+      </g>
+      <g stroke="#ffffff" strokeOpacity="0.2" strokeWidth="2" className="sm:hidden">
+        <line x1="400" y1="84" x2="400" y2="100" />
+        <line x1="452" y1="84" x2="452" y2="100" />
+        <line x1="504" y1="84" x2="504" y2="100" />
+        <line x1="860" y1="84" x2="860" y2="100" />
+        <line x1="912" y1="84" x2="912" y2="100" />
       </g>
 
       {/* Debris flecks breaking off a few of the spikes, sitting in the
